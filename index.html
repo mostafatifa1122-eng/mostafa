@@ -1,8 +1,392 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://crazy-net.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://crazy-net.com/#guides</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://crazy-net.com/#courses</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://crazy-net.com/#product</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://crazy-net.com/#consultations</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-</urlset>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شيتات الأبطال | Excel Templates جاهزة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #F5A623;
+      --brown: #4A2E1B;
+      --cream: #FFF9F0;
+      --green: #0B7B46;
+      --dark: #1E1E1E;
+      --instapay: #6C3C9E;
+      --whatsapp: #25D366;
+    }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: #FFFDF9;
+      color: var(--dark);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    .container { width: 92%; max-width: 1100px; margin: 0 auto; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #2D5A27 0%, #1B4A1A 100%);
+      color: white;
+      padding: 3rem 0 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -30%; left: -10%;
+      width: 400px; height: 400px;
+      background: rgba(245,166,35,0.08);
+      border-radius: 50%;
+    }
+    .hero-badge {
+      background: var(--gold);
+      color: #000;
+      display: inline-block;
+      padding: 0.4rem 1.5rem;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Cairo', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero p { font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem; z-index: 2; position: relative; }
+    .cta-btn {
+      background: var(--gold);
+      color: #000;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      transition: 0.3s;
+      box-shadow: 0 10px 25px rgba(245,166,35,0.4);
+    }
+    .cta-btn:hover { transform: scale(1.05); }
+
+    /* Timer */
+    .timer-section {
+      background: white;
+      padding: 1.2rem;
+      border-radius: 16px;
+      margin: -30px auto 2rem;
+      position: relative;
+      z-index: 3;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+      text-align: center;
+      max-width: 600px;
+    }
+    .timer-text { font-weight: 600; color: var(--brown); margin-bottom: 0.5rem; }
+    #countdown {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #C0392B;
+      font-family: 'Cairo', sans-serif;
+      direction: ltr;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    /* Products Grid */
+    .section-title {
+      text-align: center;
+      font-family: 'Cairo', sans-serif;
+      color: #2D5A27;
+      margin: 2rem 0 1.5rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .product-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 35px rgba(0,0,0,0.1); }
+    .card-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 4px solid #2D5A27;
+      background: #E8F5E9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+    .card-body {
+      padding: 1.8rem 1.5rem 1.5rem;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-title {
+      font-family: 'Cairo', sans-serif;
+      font-size: 1.5rem;
+      color: #2D5A27;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    .card-description { font-size: 0.95rem; color: #555; margin-bottom: 1.2rem; flex-grow: 1; }
+    .price {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--green);
+      margin: 0.5rem 0 1.2rem;
+      font-family: 'Cairo', sans-serif;
+    }
+    .price span { font-size: 0.9rem; color: #888; font-weight: 400; }
+    .btn-group { display: flex; flex-direction: column; gap: 0.6rem; margin-top: auto; }
+    .btn {
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+    }
+    .btn-wa { background: var(--whatsapp); color: white; }
+    .btn-instapay { background: var(--instapay); color: white; }
+
+    /* Features */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+    .feat-item {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+    }
+    .feat-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .feat-title { font-weight: 700; color: #2D5A27; }
+
+    /* WhatsApp Float */
+    .wa-float {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      background: var(--whatsapp);
+      color: white;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 8px 25px rgba(37,211,102,0.4);
+      z-index: 999;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+
+    /* Popup */
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+    .popup {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+    .btn-popup {
+      background: var(--instapay);
+      color: white;
+      margin: 0.5rem;
+    }
+    .btn-cancel { background: #ccc; color: #333; }
+
+    .footer {
+      background: var(--dark);
+      color: #aaa;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-badge">📊 الأكثر طلباً في مصر</div>
+      <h1>شيتات <span>Excel</span> جاهزة<br>لإدارة أعمالك بدقة</h1>
+      <p>قوالب إكسيل احترافية – وفر وقتك وابدأ التنظيم فوراً</p>
+      <a href="#products" class="cta-btn">🔽 اختر باقتك الآن</a>
+    </div>
+  </header>
+
+  <!-- Timer -->
+  <div class="container">
+    <div class="timer-section">
+      <div class="timer-text">⏳ عرض لفترة محدودة – السعر الحالي:</div>
+      <div id="countdown">12 : 00</div>
+    </div>
+  </div>
+
+  <!-- Products -->
+  <main class="container" id="products">
+    <h2 class="section-title">📌 باقات شيتات الأبطال</h2>
+    <div class="products-grid" id="productsGrid"></div>
+
+    <!-- Features -->
+    <div class="features-grid">
+      <div class="feat-item"><div class="feat-icon">📈</div><div class="feat-title">تقارير تلقائية</div></div>
+      <div class="feat-item"><div class="feat-icon">🧾</div><div class="feat-title">فواتير ومصاريف</div></div>
+      <div class="feat-item"><div class="feat-icon">💳</div><div class="feat-title">إنستاباي و كاش</div></div>
+      <div class="feat-item"><div class="feat-icon">📲</div><div class="feat-title">دعم واتساب</div></div>
+    </div>
+  </main>
+
+  <!-- Popup InstaPay -->
+  <div class="popup-overlay" id="instapayPopup">
+    <div class="popup">
+      <h3>💳 الدفع بإنستاباي</h3>
+      <p>المبلغ حسب باقتك المختارة</p>
+      <p>حساب InstaPay: <br><strong>mostafa.tifa1122@instapay</strong></p>
+      <p>بعد التحويل، ابعت سكرين شوت واتساب على <br><strong>01112876080</strong></p>
+      <button class="btn btn-popup" onclick="proceedToPay()">🔗 فتح تطبيق إنستاباي</button>
+      <button class="btn btn-cancel" onclick="closePopup()">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/201112876080" class="wa-float" target="_blank">💬</a>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>📞 واتساب: <span style="color:var(--gold);">01112876080</span></p>
+    <p>© 2026 شيتات الأبطال – جميع الحقوق محفوظة</p>
+  </div>
+
+  <script>
+    // ======= الإعدادات =======
+    const WHATSAPP_NUMBER = '01112876080';
+    const INSTAPAY_LINK = 'https://ipn.eg/S/mostafa.tifa1122/instapay/08NazU';
+
+    // منتجات الشيتات
+    const products = [
+      {
+        name: 'باقة المطاعم والكافيهات',
+        desc: 'شيت إدارة طلبات يومية، حساب أرباح، جرد يومي، ومتابعة المصروفات – مصمم خصيصًا للمطاعم.',
+        price: '79',
+        // استبدل المسار بصورة سكرين شوت لشيت المطعم الخاص بك
+        image: 'images/restaurant-sheet.jpg',
+        message: 'أريد شراء باقة شيتات المطاعم (79 ج)'
+      },
+      {
+        name: 'باقة العيادات والمراكز',
+        desc: 'شيت حجوزات، حسابات مرضى، متابعة إيرادات، وتقارير شهرية – مناسب لكل عيادة.',
+        price: '89',
+        image: 'images/clinic-sheet.jpg',
+        message: 'أريد شراء باقة شيتات العيادات (89 ج)'
+      },
+      {
+        name: 'الحزمة الشاملة (الذهبية)',
+        desc: '5 شيتات كاملة: محاسبة، مخازن، عملاء، موظفين، وتحليل بيانات مع لوحة تحكم.',
+        price: '149',
+        image: 'images/golden-pack.jpg',
+        message: 'أريد شراء الحزمة الشاملة (149 ج)'
+      }
+    ];
+
+    const productsGrid = document.getElementById('productsGrid');
+
+    function createProductCard(product) {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" class="card-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="card-image-fallback" style="display:none; height:200px; background:#E8F5E9; align-items:center; justify-content:center; font-size:3rem;">📊</div>
+        <div class="card-body">
+          <h3 class="card-title">${product.name}</h3>
+          <p class="card-description">${product.desc}</p>
+          <p class="price">${product.price} <span>ج.م</span></p>
+          <div class="btn-group">
+            <a href="https://wa.me/2${WHATSAPP_NUMBER}?text=${encodeURIComponent(product.message)}" class="btn btn-wa" target="_blank">📲 اطلب واتساب</a>
+            <button class="btn btn-instapay" onclick="openPopup()">💳 ادفع بإنستاباي</button>
+          </div>
+        </div>
+      `;
+      return card;
+    }
+
+    products.forEach(p => productsGrid.appendChild(createProductCard(p)));
+
+    // عداد 12 دقيقة
+    let timeLeft = 12 * 60;
+    const countdownEl = document.getElementById('countdown');
+    function updateTimer() {
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      countdownEl.innerHTML = `${String(mins).padStart(2,'0')} : ${String(secs).padStart(2,'0')}`;
+      if (timeLeft > 0) timeLeft--;
+    }
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // Popup functions
+    function openPopup() {
+      document.getElementById('instapayPopup').style.display = 'flex';
+    }
+    function closePopup() {
+      document.getElementById('instapayPopup').style.display = 'none';
+    }
+    function proceedToPay() {
+      window.open(INSTAPAY_LINK, '_blank');
+      closePopup();
+    }
+    document.getElementById('instapayPopup').addEventListener('click', function(e) {
+      if (e.target === this) closePopup();
+    });
+  </script>
+</body>
+</html>
