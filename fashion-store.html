@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أناقة - للملابس العصرية</title>
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #f4f4f4;
+            --accent-color: #c5a059; /* لون ذهبي هادئ للفخامة */
+            --text-color: #333;
+            --white: #ffffff;
+            --transition: all 0.4s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* شاشة الترحيب (Modal) */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: var(--transition);
+        }
+
+        .welcome-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .welcome-card {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 2px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            transform: translateY(0);
+            transition: var(--transition);
+        }
+
+        .welcome-overlay.hidden .welcome-card {
+            transform: translateY(-50px);
+        }
+
+        .brand-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        .welcome-text {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            text-align: right;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            background: #fafafa;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .input-field:focus {
+            border-color: var(--accent-color);
+            background: var(--white);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-color);
+        }
+
+        /* المحتوى الرئيسي */
+        header {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+        }
+
+        .cta-button {
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .cta-button:hover {
+            background: var(--white);
+            color: var(--primary-color);
+        }
+
+        /* قسم المنتجات */
+        .products {
+            padding: 5rem 5%;
+            background: var(--secondary-color);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            padding: 1rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: auto;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .welcome-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شاشة تسجيل الدخول الأولى -->
+    <div class="welcome-overlay" id="welcomeOverlay">
+        <div class="welcome-card">
+            <div class="brand-logo">أناقة</div>
+            <p class="welcome-text">مرحباً بك في عالم الفخامة. يرجى تسجيل بياناتك للمرة الأولى للوصول إلى المجموعة الحصرية.</p>
+            
+            <form id="userForm">
+                <div class="input-group">
+                    <label for="phone">رقم الموبايل</label>
+                    <input type="tel" id="phone" class="input-field" placeholder="01xxxxxxxxx" required pattern="[0-9]{11}">
+                </div>
+                
+                <div class="input-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" class="input-field" placeholder="example@mail.com" required>
+                </div>
+
+                <button type="submit" class="submit-btn">دخول المتجر</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- الهيدر -->
+    <header>
+        <div class="brand-logo" style="color: white;">أناقة</div>
+        <nav>
+            <!-- يمكن إضافة قائمة هنا -->
+        </nav>
+    </header>
+
+    <!-- القسم الرئيسي -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>اكتشف أسلوبك الجديد</h1>
+            <p>ملابس عصرية تجمع بين الراحة والفخامة</p>
+            <a href="#products" class="cta-button">تسوق الآن</a>
+        </div>
+    </section>
+
+    <!-- قسم المنتجات -->
+    <section class="products" id="products">
+        <h2 class="section-title">أحدث التشكيلات</h2>
+        <div class="product-grid">
+            <!-- منتج 1 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="فستان صيفي" class="product-image">
+                <h3 class="product-title">فستان صيفي أنيق</h3>
+                <p class="product-price">450 ج.م</p>
+            </div>
+            <!-- منتج 2 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1529139574466-a302d2d3f524?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="بدلة رجالية" class="product-image">
+                <h3 class="product-title">بدلة كلاسيكية</h3>
+                <p class="product-price">1200 ج.م</p>
+            </div>
+            <!-- منتج 3 -->
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="ملابس بيضاء" class="product-image">
+                <h3 class="product-title">قميص قطن فاخر</h3>
+                <p class="product-price">350 ج.م</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2023 أناقة للملابس</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const welcomeOverlay = document.getElementById('welcomeOverlay');
+            const userForm = document.getElementById('userForm');
+            
+            // التحقق مما إذا كان المستخدم قد زار الموقع من قبل
+            const hasVisited = localStorage.getItem('hasVisited');
+
+            if (hasVisited) {
+                // إذا كان قد زار من قبل، نخفي الشاشة فوراً
+                welcomeOverlay.classList.add('hidden');
+            }
+
+            // عند إرسال النموذج
+            userForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const phone = document.getElementById('phone').value;
+                const email = document.getElementById('email').value;
+
+                if(phone && email) {
+                    // حفظ البيانات في LocalStorage (محاكاة لقاعدة بيانات)
+                    // في التطبيق الحقيقي، يتم إرسال هذه البيانات للسيرفر هنا
+                    localStorage.setItem('hasVisited', 'true');
+                    localStorage.setItem('userPhone', phone);
+                    localStorage.setItem('userEmail', email);
+
+                    // إخفاء شاشة الترحيب
+                    welcomeOverlay.classList.add('hidden');
+                    
+                    console.log('تم تسجيل البيانات بنجاح');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
