@@ -3,279 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام ERP للمصانع الكيميائية - Chemical ERP</title>
+    <title>نظام Chemical ERP - لوحة التحكم والإدارة</title>
     <!-- Bootstrap CSS & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-    
     <style>
         * { font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background: linear-gradient(135deg, #0d2137 0%, #1a3a5c 100%); color: white; min-height: 100vh; }
-        .hero { padding: 80px 20px; text-align: center; }
-        .hero h1 { font-size: 3rem; font-weight: bold; color: #4CAF50; }
-        .hero p { font-size: 1.2rem; color: #b0c4de; }
-        .card-feature { background: rgba(42, 90, 140, 0.5); border: 1px solid #2a7a9c; border-radius: 15px; padding: 25px; transition: 0.3s; height: 100%; }
-        .card-feature:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(42, 122, 156, 0.4); background: rgba(42, 90, 140, 0.8); }
-        .card-feature i { font-size: 2.5rem; color: #4CAF50; }
-        .section-title { text-align: center; margin: 60px 0 40px; color: #4CAF50; font-size: 2rem; }
-        .demo-box { background: rgba(0,0,0,0.5); border: 2px solid #4CAF50; border-radius: 15px; padding: 30px; max-width: 600px; margin: 0 auto; }
-        .demo-box input, .demo-box select { background: rgba(255,255,255,0.1); border: 1px solid #4CAF50; color: white; }
-        .demo-box select option { background-color: #1a3a5c; color: white; }
-        .demo-box input:focus, .demo-box select:focus { background: rgba(255,255,255,0.15); color: white; border-color: #4CAF50; box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25); }
-        .btn-demo { background: #4CAF50; color: white; border: none; width: 100%; padding: 12px; font-size: 1.1rem; border-radius: 8px; }
-        .btn-demo:hover { background: #388E3C; }
-        .result-box { background: rgba(76, 175, 80, 0.1); border-right: 4px solid #4CAF50; padding: 15px; border-radius: 8px; margin-top: 15px; display: none; }
-        footer { background: rgba(0,0,0,0.3); padding: 30px; text-align: center; margin-top: 80px; color: #b0c4de; }
-        .badge-feature { background: #4CAF50; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; margin: 3px; display: inline-block; }
+        body { background-color: #f4f6f9; color: #333; }
+        .sidebar { background-color: #0d2137; color: white; min-height: 100vh; padding-top: 20px; }
+        .sidebar .nav-link { color: #b0c4de; margin: 5px 0; padding: 12px 20px; border-radius: 8px; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { background-color: #1a3a5c; color: #4CAF50; font-weight: bold; }
+        .stat-card { background: white; border-radius: 12px; padding: 20px; border-right: 5px solid #4CAF50; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .main-content { padding: 30px; }
+        .card-custom { background: white; border-radius: 12px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); padding: 20px; margin-bottom: 25px; }
     </style>
 </head>
 <body>
 
-    <!-- Hero Section -->
-    <div class="hero">
-        <div class="container">
-            <h1>🏭 نظام ERP للمصانع الكيميائية</h1>
-            <p class="mt-3">نظام متكامل لإدارة المصانع الكيميائية مع دعم كامل للأيزو والتصدير الأوروبي</p>
-            <div class="mt-4">
-                <span class="badge-feature">✅ ISO Ready</span>
-                <span class="badge-feature">✅ EU Export</span>
-                <span class="badge-feature">✅ HS Code</span>
-                <span class="badge-feature">✅ CoA & DoC</span>
-                <span class="badge-feature">✅ NIS Calibration</span>
+<div class="container-fluid">
+    <div class="row">
+        <!-- القائمة الجانبية -->
+        <div class="col-md-3 col-lg-2 sidebar">
+            <h4 class="text-center text-success mb-4"><i class="bi bi-gear-wide-connected"></i> Chemical ERP</h4>
+            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist">
+                <button class="nav-link active text-start" id="tab-dash" data-bs-toggle="pill" data-bs-target="#sec-dash" type="button"><i class="bi bi-speedometer2 me-2"></i> لوحة الإحصائيات</button>
+                <button class="nav-link text-start" id="tab-inventory" data-bs-toggle="pill" data-bs-target="#sec-inventory" type="button"><i class="bi bi-boxes me-2"></i> رصيد المخازن</button>
+                <button class="nav-link text-start" id="tab-purchases" data-bs-toggle="pill" data-bs-target="#sec-purchases" type="button"><i class="bi bi-cart-plus me-2"></i> المشتريات</button>
+                <button class="nav-link text-start" id="tab-sales" data-bs-toggle="pill" data-bs-target="#sec-sales" type="button"><i class="bi bi-receipt me-2"></i> المبيعات والفواتير</button>
             </div>
-            <div class="mt-4">
-                <a href="#demo" class="btn btn-success btn-lg px-5">🎯 جرب النظام</a>
-                <a href="https://github.com/mostafatifa1122-eng/chemical-erp-system" target="_blank" class="btn btn-outline-light btn-lg px-5">📦 الكود على GitHub</a>
+        </div>
+
+        <!-- المحتوى الرئيسي -->
+        <div class="col-md-9 col-lg-10 main-content">
+            <div class="tab-content" id="v-pills-tabContent">
+                
+                <!-- 1. لوحة الإحصائيات -->
+                <div class="tab-pane fade show active" id="sec-dash">
+                    <h3 class="mb-4">📊 لوحة التحكم والإحصائيات</h3>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <div class="stat-card">
+                                <h6>عدد المنتجات بالمخزن</h6>
+                                <h3 id="stat-products-count" class="text-primary">0</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-card" style="border-color: #2196F3;">
+                                <h6>إجمالي المشتريات</h6>
+                                <h3 id="stat-purchases-total" class="text-info">0 ج.م</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-card" style="border-color: #FF9800;">
+                                <h6>إجمالي المبيعات</h6>
+                                <h3 id="stat-sales-total" class="text-warning">0 ج.م</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. رصيد المخازن -->
+                <div class="tab-pane fade" id="sec-inventory">
+                    <h3 class="mb-4">📦 إدارة رصيد المخزن</h3>
+                    <div class="card-custom">
+                        <h5>إضافة منتج / خامة جديدة</h5>
+                        <form id="form-product" class="row g-3 mt-1">
+                            <div class="col-md-3">
+                                <label class="form-label">اسم الخامة/المنتج</label>
+                                <input type="text" id="p-name" class="form-control" placeholder="مثال: صودا كاوية" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">رمز HS Code</label>
+                                <input type="text" id="p-hscode" class="form-control" placeholder="2815.11">
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">الكمية الأولى</label>
+                                <input type="number" id="p-qty" class="form-control" value="0" min="0" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">سعر الوحدة (ج.م)</label>
+                                <input type="number" id="p-price" class="form-control" value="0" min="0" required>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <button type="submit" class="btn btn-success w-100"><i class="bi bi-plus-lg"></i> إضافة للمخزن</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card-custom">
+                        <h5>جدول رصيد المخزن الحالي</h5>
+                        <table class="table table-hover mt-3">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>اسم المنتج</th>
+                                    <th>HS Code</th>
+                                    <th>الكمية المتاحة</th>
+                                    <th>سعر الوحدة</th>
+                                    <th>إجمالي القيمة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbl-inventory"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 3. المشتريات -->
+                <div class="tab-pane fade" id="sec-purchases">
+                    <h3 class="mb-4">🛒 فاتورة مشتريات جديدة</h3>
+                    <div class="card-custom">
+                        <form id="form-purchase" class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">اختر الخامة/المنتج</label>
+                                <select id="pur-select-product" class="form-select" required></select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">الكمية المشكراة</label>
+                                <input type="number" id="pur-qty" class="form-control" min="1" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">سعر الشراء للوحدة</label>
+                                <input type="number" id="pur-price" class="form-control" min="1" required>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <button type="submit" class="btn btn-primary w-100">تسجيل الشراء</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 4. المبيعات -->
+                <div class="tab-pane fade" id="sec-sales">
+                    <h3 class="mb-4">🧾 فاتورة مبيعات جديدة</h3>
+                    <div class="card-custom">
+                        <form id="form-sales" class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">اختر المنتج المباع</label>
+                                <select id="sale-select-product" class="form-select" required></select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">الكمية المباعة</label>
+                                <input type="number" id="sale-qty" class="form-control" min="1" required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">سعر البيع للوحدة</label>
+                                <input type="number" id="sale-price" class="form-control" min="1" required>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <button type="submit" class="btn btn-warning text-white w-100">تسجيل البيع</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Features Section -->
-    <div class="container">
-        <h2 class="section-title">📋 مميزات النظام</h2>
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card-feature text-center">
-                    <i class="bi bi-boxes"></i>
-                    <h5 class="mt-3">إدارة المخازن</h5>
-                    <p>متابعة الخامات والمنتجات مع رموز HS Code وحدود الطلب</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card-feature text-center">
-                    <i class="bi bi-receipt"></i>
-                    <h5 class="mt-3">الفواتير الإلكترونية</h5>
-                    <p>فواتير متوافقة مع مصلحة الضرائب المصرية + شهادة منشأ</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card-feature text-center">
-                    <i class="bi bi-upc-scan"></i>
-                    <h5 class="mt-3">تتبع الدفعات</h5>
-                    <p>تتبع كامل من الخامة للمنتج النهائي مع رقم الدفعة</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card-feature text-center">
-                    <i class="bi bi-eyedropper"></i>
-                    <h5 class="mt-3">المعمل الكيميائي</h5>
-                    <p>تحاليل يومية، شهادات معايرة NIS، تقارير مطابقة</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card-feature text-center">
-                    <i class="bi bi-people"></i>
-                    <h5 class="mt-3">الموارد البشرية</h5>
-                    <p>حضور بالبصمة، رواتب، إجازات، ورديات، معايرة</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card-feature text-center">
-                    <i class="bi bi-file-check"></i>
-                    <h5 class="mt-3">تقارير الأيزو</h5>
-                    <p>جاهزية كاملة لمراجعة الأيزو والتصدير الأوروبي</p>
-                </div>
-            </div>
-        </div>
+<!-- JS Frameworks -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // قاعدة البيانات المحلية
+    let store = JSON.parse(localStorage.getItem('erp_data')) || {
+        products: [],
+        purchasesTotal: 0,
+        salesTotal: 0
+    };
 
-        <!-- Demo Section -->
-        <h2 class="section-title" id="demo">🎯 جرب النظام التفاعلي</h2>
-        <p class="text-center text-light mb-4">اختار أي وحدة من النظام وشوف شكل الشغل</p>
+    function saveData() {
+        localStorage.setItem('erp_data', JSON.stringify(store));
+        render();
+    }
 
-        <div class="demo-box">
-            <label class="form-label">اختر الوحدة:</label>
-            <select id="moduleSelect" class="form-select mb-3">
-                <option value="">-- اختر --</option>
-                <option value="products">📦 إدارة المنتجات والمخازن</option>
-                <option value="invoices">🧾 الفواتير</option>
-                <option value="batches">🏷️ تتبع الدفعات</option>
-                <option value="lab">🧪 المعمل الكيميائي</option>
-                <option value="hr">👥 الموارد البشرية</option>
-                <option value="iso">📋 تقارير الأيزو</option>
-            </select>
+    // إضافة منتج
+    document.getElementById('form-product').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('p-name').value;
+        const hscode = document.getElementById('p-hscode').value || 'N/A';
+        const qty = parseFloat(document.getElementById('p-qty').value);
+        const price = parseFloat(document.getElementById('p-price').value);
 
-            <button class="btn-demo" onclick="showDemo()">عرض التجربة</button>
+        store.products.push({ id: Date.now(), name, hscode, qty, price });
+        saveData();
+        this.reset();
+    });
 
-            <div id="resultBox" class="result-box"></div>
-        </div>
+    // تسجيل مشتريات
+    document.getElementById('form-purchase').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const pId = parseInt(document.getElementById('pur-select-product').value);
+        const qty = parseFloat(document.getElementById('pur-qty').value);
+        const price = parseFloat(document.getElementById('pur-price').value);
 
-        <!-- Stats Section -->
-        <h2 class="section-title">📊 إحصائيات النظام</h2>
-        <div class="row g-4 text-center">
-            <div class="col-md-3">
-                <div class="card-feature">
-                    <h2 class="text-success">20+</h2>
-                    <p>وحدة متكاملة</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card-feature">
-                    <h2 class="text-success">5</h2>
-                    <p>مستويات صلاحيات</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card-feature">
-                    <h2 class="text-success">100%</h2>
-                    <p>دعم عربي</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card-feature">
-                    <h2 class="text-success">48 ساعة</h2>
-                    <p>استجابة الشكاوى</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        const prod = store.products.find(p => p.id === pId);
+        if (prod) {
+            prod.qty += qty;
+            store.purchasesTotal += (qty * price);
+            saveData();
+            alert('تم إضافة الكمية للمخزن وتسجيل المشتريات بنجاح!');
+            this.reset();
+        }
+    });
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2026 نظام ERP للمصانع الكيميائية - جميع الحقوق محفوظة</p>
-        <p>تم التطوير بواسطة <strong>مصطفى</strong></p>
-        <div class="mt-3">
-            <a href="https://github.com/mostafatifa1122-eng/chemical-erp-system" target="_blank" class="text-success me-3">
-                <i class="bi bi-github"></i> GitHub
-            </a>
-            <a href="mailto:contact@example.com" class="text-success me-3">
-                <i class="bi bi-envelope"></i> البريد
-            </a>
-            <a href="https://wa.me/201000000000" target="_blank" class="text-success">
-                <i class="bi bi-whatsapp"></i> واتساب
-            </a>
-        </div>
-    </footer>
+    // تسجيل مبيعات
+    document.getElementById('form-sales').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const pId = parseInt(document.getElementById('sale-select-product').value);
+        const qty = parseFloat(document.getElementById('sale-qty').value);
+        const price = parseFloat(document.getElementById('sale-price').value);
 
-    <script>
-        const demos = {
-            products: {
-                title: '📦 إدارة المنتجات والمخازن',
-                content: `
-                    <h6>الوظائف المتاحة:</h6>
-                    <ul>
-                        <li>إضافة منتج مع رمز HS Code</li>
-                        <li>متابعة المخزون لحظياً</li>
-                        <li>تنبيه عند وصول المخزون للحد الأدنى</li>
-                        <li>إذن صرف واسترجاع الخامات</li>
-                    </ul>
-                    <p><strong>مثال:</strong> مادة "صودا كاوية" - HS Code: 2815.11 - المخزون: 500 كجم</p>
-                `
-            },
-            invoices: {
-                title: '🧾 الفواتير الإلكترونية',
-                content: `
-                    <h6>الوظائف المتاحة:</h6>
-                    <ul>
-                        <li>فاتورة بيع/شراء/تصدير</li>
-                        <li>ربط الفاتورة برقم الدفعة</li>
-                        <li>توليد XML متوافق مع مصلحة الضرائب</li>
-                        <li>شهادة منشأ للتصدير</li>
-                    </ul>
-                    <p><strong>مثال:</strong> فاتورة رقم INV-2026-001 - الإجمالي: 150,000 ج.م</p>
-                `
-            },
-            batches: {
-                title: '🏷️ تتبع الدفعات',
-                content: `
-                    <h6>الوظائف المتاحة:</h6>
-                    <ul>
-                        <li>تسجيل دفعة إنتاج جديدة</li>
-                        <li>ربط الدفعة بالخامات الداخلة</li>
-                        <li>طباعة ملصق الدفعة للعبوة</li>
-                        <li>تتبع عكسي من المنتج للخامة</li>
-                    </ul>
-                    <p><strong>مثال:</strong> دفعة B-2026-015 - أنتجت 500 كجم من الصودا</p>
-                `
-            },
-            lab: {
-                title: '🧪 المعمل الكيميائي',
-                content: `
-                    <h6>الوظائف المتاحة:</h6>
-                    <ul>
-                        <li>تسجيل عينة وتحليلها (pH، لزوجة، كثافة)</li>
-                        <li>سجل التحاليل اليومية</li>
-                        <li>معايرة الأجهزة مع NIS</li>
-                        <li>إصدار شهادة تحليل (CoA)</li>
-                    </ul>
-                    <p><strong>مثال:</strong> عينة S-001 - pH = 7.2 ✅ - النتيجة: مطابق</p>
-                `
-            },
-            hr: {
-                title: '👥 الموارد البشرية',
-                content: `
-                    <h6>الوظائف المتاحة:</h6>
-                    <ul>
-                        <li>تسجيل حضور بالبصمة</li>
-                        <li>حساب ساعات العمل الإضافية</li>
-                        <li>توليد كشوف الرواتب الشهرية</li>
-                        <li>إدارة الإجازات والورديات</li>
-                    </ul>
-                    <p><strong>مثال:</strong> الموظف أحمد - حضور 09:00 - انصراف 18:30 - 1.5 ساعة إضافي</p>
-                `
-            },
-            iso: {
-                title: '📋 تقارير الأيزو',
-                content: `
-                    <h6>التقارير المتاحة:</h6>
-                    <ul>
-                        <li>تقرير الأيزو الشامل (عربي/إنجليزي)</li>
-                        <li>تقرير سجل الغرفة التجارية</li>
-                        <li>إقرار المطابقة (DoC)</li>
-                        <li>سجل تدقيق الموردين</li>
-                    </ul>
-                    <p><strong>مثال:</strong> تقرير الأيزو - 6 منتجات - 15 دفعة - 100% مطابقة</p>
-                `
-            }
-        };
-
-        function showDemo() {
-            const selected = document.getElementById('moduleSelect').value;
-            const resultBox = document.getElementById('resultBox');
-            
-            if (!selected) {
-                resultBox.innerHTML = '<p class="text-warning">⚠️ من فضلك اختر وحدة أولاً</p>';
-                resultBox.style.display = 'block';
+        const prod = store.products.find(p => p.id === pId);
+        if (prod) {
+            if (prod.qty < qty) {
+                alert('عذراً! الكمية المتاحة بالمخزن لا تكفي.');
                 return;
             }
-
-            const demo = demos[selected];
-            resultBox.innerHTML = `
-                <h5 class="text-success">${demo.title}</h5>
-                <div class="mt-3">${demo.content}</div>
-                <hr>
-                <a href="https://github.com/mostafatifa1122-eng/chemical-erp-system" target="_blank" class="btn btn-outline-success btn-sm">
-                    <i class="bi bi-github"></i> شوف الكود الكامل
-                </a>
-            `;
-            resultBox.style.display = 'block';
+            prod.qty -= qty;
+            store.salesTotal += (qty * price);
+            saveData();
+            alert('تم تسجيل عملية البيع وخصم الكمية من المخزن!');
+            this.reset();
         }
+    });
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-            });
+    // تحديث الواجهة
+    function render() {
+        // الإحصائيات
+        document.getElementById('stat-products-count').innerText = store.products.length;
+        document.getElementById('stat-purchases-total').innerText = store.purchasesTotal.toLocaleString() + ' ج.م';
+        document.getElementById('stat-sales-total').innerText = store.salesTotal.toLocaleString() + ' ج.م';
+
+        // جدول المخزون
+        const tbl = document.getElementById('tbl-inventory');
+        tbl.innerHTML = '';
+        const selectPur = document.getElementById('pur-select-product');
+        const selectSale = document.getElementById('sale-select-product');
+        
+        selectPur.innerHTML = '<option value="">اختر المنتج...</option>';
+        selectSale.innerHTML = '<option value="">اختر المنتج...</option>';
+
+        store.products.forEach((p, idx) => {
+            tbl.innerHTML += `
+                <tr>
+                    <td>${idx + 1}</td>
+                    <td><strong>${p.name}</strong></td>
+                    <td><span class="badge bg-secondary">${p.hscode}</span></td>
+                    <td class="${p.qty < 5 ? 'text-danger fw-bold' : ''}">${p.qty}</td>
+                    <td>${p.price} ج.م</td>
+                    <td>${(p.qty * p.price).toLocaleString()} ج.م</td>
+                </tr>
+            `;
+
+            selectPur.innerHTML += `<option value="${p.id}">${p.name} (المتاح: ${p.qty})</option>`;
+            selectSale.innerHTML += `<option value="${p.id}">${p.name} (المتاح: ${p.qty})</option>`;
         });
-    </script>
+    }
+
+    render();
+</script>
 </body>
 </html>
