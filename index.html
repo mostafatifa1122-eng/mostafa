@@ -3,68 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحة متكاملة في ملف واحد</title>
+    <title>نظام ERP للمصانع الكيميائية - Chemical ERP</title>
+    <!-- Bootstrap CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     
-    <!-- هنا ينكتب كود الـ CSS -->
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .card {
-            background: #ffffff;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-        }
-
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        #message {
-            margin-top: 15px;
-            font-weight: bold;
-            color: #28a745;
-        }
+        * { font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background: linear-gradient(135deg, #0d2137 0%, #1a3a5c 100%); color: white; min-height: 100vh; }
+        .hero { padding: 80px 20px; text-align: center; }
+        .hero h1 { font-size: 3rem; font-weight: bold; color: #4CAF50; }
+        .hero p { font-size: 1.2rem; color: #b0c4de; }
+        .card-feature { background: rgba(42, 90, 140, 0.5); border: 1px solid #2a7a9c; border-radius: 15px; padding: 25px; transition: 0.3s; height: 100%; }
+        .card-feature:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(42, 122, 156, 0.4); background: rgba(42, 90, 140, 0.8); }
+        .card-feature i { font-size: 2.5rem; color: #4CAF50; }
+        .section-title { text-align: center; margin: 60px 0 40px; color: #4CAF50; font-size: 2rem; }
+        .demo-box { background: rgba(0,0,0,0.5); border: 2px solid #4CAF50; border-radius: 15px; padding: 30px; max-width: 600px; margin: 0 auto; }
+        .demo-box input, .demo-box select { background: rgba(255,255,255,0.1); border: 1px solid #4CAF50; color: white; }
+        .demo-box select option { background-color: #1a3a5c; color: white; }
+        .demo-box input:focus, .demo-box select:focus { background: rgba(255,255,255,0.15); color: white; border-color: #4CAF50; box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25); }
+        .btn-demo { background: #4CAF50; color: white; border: none; width: 100%; padding: 12px; font-size: 1.1rem; border-radius: 8px; }
+        .btn-demo:hover { background: #388E3C; }
+        .result-box { background: rgba(76, 175, 80, 0.1); border-right: 4px solid #4CAF50; padding: 15px; border-radius: 8px; margin-top: 15px; display: none; }
+        footer { background: rgba(0,0,0,0.3); padding: 30px; text-align: center; margin-top: 80px; color: #b0c4de; }
+        .badge-feature { background: #4CAF50; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; margin: 3px; display: inline-block; }
     </style>
 </head>
 <body>
 
-    <!-- هنا عناصر الـ HTML -->
-    <div class="card">
-        <h2>مرحباً بك!</h2>
-        <p>اضغط على الزر بالأسفل لتشغيل كود الـ JavaScript.</p>
-        <button id="btn">اضغط هنا</button>
-        <p id="message"></p>
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="container">
+            <h1>🏭 نظام ERP للمصانع الكيميائية</h1>
+            <p class="mt-3">نظام متكامل لإدارة المصانع الكيميائية مع دعم كامل للأيزو والتصدير الأوروبي</p>
+            <div class="mt-4">
+                <span class="badge-feature">✅ ISO Ready</span>
+                <span class="badge-feature">✅ EU Export</span>
+                <span class="badge-feature">✅ HS Code</span>
+                <span class="badge-feature">✅ CoA & DoC</span>
+                <span class="badge-feature">✅ NIS Calibration</span>
+            </div>
+            <div class="mt-4">
+                <a href="#demo" class="btn btn-success btn-lg px-5">🎯 جرب النظام</a>
+                <a href="https://github.com/mostafatifa1122-eng/chemical-erp-system" target="_blank" class="btn btn-outline-light btn-lg px-5">📦 الكود على GitHub</a>
+            </div>
+        </div>
     </div>
 
-    <!-- هنا ينكتب كود الـ JavaScript -->
-    <script>
-        const button = document.getElementById('btn');
-        const message = document.getElementById('message');
+    <!-- Features Section -->
+    <div class="container">
+        <h2 class="section-title">📋 مميزات النظام</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card-feature text-center">
+                    <i class="bi bi-boxes"></i>
+                    <h5 class="mt-3">إدارة المخازن</h5>
+                    <p>متابعة الخامات والمنتجات مع رموز HS Code وحدود الطلب</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-feature text-center">
+                    <i class="bi bi-receipt"></i>
+                    <h5 class="mt-3">الفواتير الإلكترونية</h5>
+                    <p>فواتير متوافقة مع مصلحة الضرائب المصرية + شهادة منشأ</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-feature text-center">
+                    <i class="bi bi-upc-scan"></i>
+                    <h5 class="mt-3">تتبع الدفعات</h5>
+                    <p>تتبع كامل من الخامة للمنتج النهائي مع رقم الدفعة</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-feature text-center">
+                    <i class="bi bi-eyedropper"></i>
+                    <h5 class="mt-3">المعمل الكيميائي</h5>
+                    <p>تحاليل يومية، شهادات معايرة NIS، تقارير مطابقة</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-feature text-center">
+                    <i class="bi bi-people"></i>
+                    <h5 class="mt-3">الموارد البشرية</h5>
+                    <p>حضور بالبصمة، رواتب، إجازات، ورديات، معايرة</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-feature text-center">
+                    <i class="bi bi-file-check"></i>
+                    <h5 class="mt-3">تقارير الأيزو</h5>
+                    <p>جاهزية كاملة لمراجعة الأيزو والتصدير الأوروبي</p>
+                </div>
+            </div>
+        </div>
 
-        button.addEventListener('click', () => {
-            message.textContent = 'تم التفاعل بنجاح من داخل نفس الملف! 🎉';
+        <!-- Demo Section -->
+        <h2 class="section-title" id="demo">🎯 جرب النظام التفاعلي</h2>
+        <p class="text-center text-light mb-4">اختار أي وحدة من النظام وشوف شكل الشغل</p>
+
+        <div class="demo-box">
+            <label class="form-label">اختر الوحدة:</label>
+            <select id="moduleSelect" class="form-select mb-3">
+                <option value="">-- اختر --</option>
+                <option value="products">📦 إدارة المنتجات والمخازن</option>
+                <option value="invoices">🧾 الفواتير</option>
+                <option value="batches">🏷️ تتبع الدفعات</option>
+                <option value="lab">🧪 المعمل الكيميائي</option>
+                <option value="hr">👥 الموارد البشرية</option>
+                <option value="iso">📋 تقارير الأيزو</option>
+            </select>
+
+            <button class="btn-demo" onclick="showDemo()">عرض التجربة</button>
+
+            <div id="resultBox" class="result-box"></div>
+        </div>
+
+        <!-- Stats Section -->
+        <h2 class="section-title">📊 إحصائيات النظام</h2>
+        <div class="row g-4 text-center">
+            <div class="col-md-3">
+                <div class="card-feature">
+                    <h2 class="text-success">20+</h2>
+                    <p>وحدة متكاملة</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-feature">
+                    <h2 class="text-success">5</h2>
+                    <p>مستويات صلاحيات</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-feature">
+                    <h2 class="text-success">100%</h2>
+                    <p>دعم عربي</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card-feature">
+                    <h2 class="text-success">48 ساعة</h2>
+                    <p>استجابة الشكاوى</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 نظام ERP للمصانع الكيميائية - جميع الحقوق محفوظة</p>
+        <p>تم التطوير بواسطة <strong>مصطفى</strong></p>
+        <div class="mt-3">
+            <a href="https://github.com/mostafatifa1122-eng/chemical-erp-system" target="_blank" class="text-success me-3">
+                <i class="bi bi-github"></i> GitHub
+            </a>
+            <a href="mailto:contact@example.com" class="text-success me-3">
+                <i class="bi bi-envelope"></i> البريد
+            </a>
+            <a href="https://wa.me/201000000000" target="_blank" class="text-success">
+                <i class="bi bi-whatsapp"></i> واتساب
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        const demos = {
+            products: {
+                title: '📦 إدارة المنتجات والمخازن',
+                content: `
+                    <h6>الوظائف المتاحة:</h6>
+                    <ul>
+                        <li>إضافة منتج مع رمز HS Code</li>
+                        <li>متابعة المخزون لحظياً</li>
+                        <li>تنبيه عند وصول المخزون للحد الأدنى</li>
+                        <li>إذن صرف واسترجاع الخامات</li>
+                    </ul>
+                    <p><strong>مثال:</strong> مادة "صودا كاوية" - HS Code: 2815.11 - المخزون: 500 كجم</p>
+                `
+            },
+            invoices: {
+                title: '🧾 الفواتير الإلكترونية',
+                content: `
+                    <h6>الوظائف المتاحة:</h6>
+                    <ul>
+                        <li>فاتورة بيع/شراء/تصدير</li>
+                        <li>ربط الفاتورة برقم الدفعة</li>
+                        <li>توليد XML متوافق مع مصلحة الضرائب</li>
+                        <li>شهادة منشأ للتصدير</li>
+                    </ul>
+                    <p><strong>مثال:</strong> فاتورة رقم INV-2026-001 - الإجمالي: 150,000 ج.م</p>
+                `
+            },
+            batches: {
+                title: '🏷️ تتبع الدفعات',
+                content: `
+                    <h6>الوظائف المتاحة:</h6>
+                    <ul>
+                        <li>تسجيل دفعة إنتاج جديدة</li>
+                        <li>ربط الدفعة بالخامات الداخلة</li>
+                        <li>طباعة ملصق الدفعة للعبوة</li>
+                        <li>تتبع عكسي من المنتج للخامة</li>
+                    </ul>
+                    <p><strong>مثال:</strong> دفعة B-2026-015 - أنتجت 500 كجم من الصودا</p>
+                `
+            },
+            lab: {
+                title: '🧪 المعمل الكيميائي',
+                content: `
+                    <h6>الوظائف المتاحة:</h6>
+                    <ul>
+                        <li>تسجيل عينة وتحليلها (pH، لزوجة، كثافة)</li>
+                        <li>سجل التحاليل اليومية</li>
+                        <li>معايرة الأجهزة مع NIS</li>
+                        <li>إصدار شهادة تحليل (CoA)</li>
+                    </ul>
+                    <p><strong>مثال:</strong> عينة S-001 - pH = 7.2 ✅ - النتيجة: مطابق</p>
+                `
+            },
+            hr: {
+                title: '👥 الموارد البشرية',
+                content: `
+                    <h6>الوظائف المتاحة:</h6>
+                    <ul>
+                        <li>تسجيل حضور بالبصمة</li>
+                        <li>حساب ساعات العمل الإضافية</li>
+                        <li>توليد كشوف الرواتب الشهرية</li>
+                        <li>إدارة الإجازات والورديات</li>
+                    </ul>
+                    <p><strong>مثال:</strong> الموظف أحمد - حضور 09:00 - انصراف 18:30 - 1.5 ساعة إضافي</p>
+                `
+            },
+            iso: {
+                title: '📋 تقارير الأيزو',
+                content: `
+                    <h6>التقارير المتاحة:</h6>
+                    <ul>
+                        <li>تقرير الأيزو الشامل (عربي/إنجليزي)</li>
+                        <li>تقرير سجل الغرفة التجارية</li>
+                        <li>إقرار المطابقة (DoC)</li>
+                        <li>سجل تدقيق الموردين</li>
+                    </ul>
+                    <p><strong>مثال:</strong> تقرير الأيزو - 6 منتجات - 15 دفعة - 100% مطابقة</p>
+                `
+            }
+        };
+
+        function showDemo() {
+            const selected = document.getElementById('moduleSelect').value;
+            const resultBox = document.getElementById('resultBox');
+            
+            if (!selected) {
+                resultBox.innerHTML = '<p class="text-warning">⚠️ من فضلك اختر وحدة أولاً</p>';
+                resultBox.style.display = 'block';
+                return;
+            }
+
+            const demo = demos[selected];
+            resultBox.innerHTML = `
+                <h5 class="text-success">${demo.title}</h5>
+                <div class="mt-3">${demo.content}</div>
+                <hr>
+                <a href="https://github.com/mostafatifa1122-eng/chemical-erp-system" target="_blank" class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-github"></i> شوف الكود الكامل
+                </a>
+            `;
+            resultBox.style.display = 'block';
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
         });
     </script>
 </body>
