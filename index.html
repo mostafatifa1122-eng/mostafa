@@ -1,874 +1,445 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏭 نظام ERP للمصنع الكيميائي</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-<style>
-* { font-family: 'Segoe UI', Tahoma, sans-serif; }
-body { background: #f0f2f5; }
-.sidebar { min-height: 100vh; background: linear-gradient(180deg, #1a3a5c, #0d2137); color: white; padding: 15px; position: fixed; width: 250px; overflow-y: auto; }
-.sidebar a { color: #b0c4de; text-decoration: none; padding: 10px 12px; display: block; border-radius: 8px; margin: 3px 0; transition: 0.3s; font-size: 0.95rem; }
-.sidebar a:hover, .sidebar a.active { background: #2a7a9c; color: white; }
-.sidebar h4 { text-align: center; padding: 15px 0; border-bottom: 1px solid #2a5a8c; }
-.main-content { margin-right: 250px; padding: 20px; }
-.card { border: none; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 15px; }
-.card-header { background: linear-gradient(90deg, #1a3a5c, #2a7a9c); color: white; border-radius: 12px 12px 0 0 !important; font-weight: bold; }
-.stat-card { padding: 20px; border-radius: 12px; color: white; text-align: center; }
-.stat-card h2 { font-size: 2.5rem; margin: 0; }
-.stat-card i { font-size: 2rem; opacity: 0.7; }
-.btn-action { margin: 3px; }
-.section { display: none; }
-.section.active { display: block; }
-.user-badge { background: #2a7a9c; padding: 8px 15px; border-radius: 20px; color: white; font-size: 0.9rem; }
-.table { font-size: 0.9rem; }
-.alert-toast { position: fixed; top: 20px; left: 20px; z-index: 9999; min-width: 300px; }
-@media print { .sidebar, .no-print { display: none !important; } .main-content { margin-right: 0; } }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام Chemical ERP المتكامل للمصانع الكيميائية</title>
+    <!-- Bootstrap 5 RTL CSS & Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --sidebar-bg: #0d2137;
+            --sidebar-hover: #1a3a5c;
+            --primary-color: #4CAF50;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; }
+        .login-wrapper { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #0d2137 0%, #1a3a5c 100%); }
+        .login-card { width: 100%; max-width: 450px; padding: 30px; background: white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .sidebar { background-color: var(--sidebar-bg); color: white; min-height: 100vh; transition: all 0.3s; }
+        .sidebar .nav-link { color: #b0c4de; margin: 4px 10px; padding: 10px 15px; border-radius: 8px; font-size: 0.95rem; display: flex; align-items: center; }
+        .sidebar .nav-link i { margin-left: 10px; font-size: 1.1rem; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { background-color: var(--sidebar-hover); color: var(--primary-color); font-weight: bold; }
+        .stat-card { background: white; border-radius: 12px; padding: 20px; border-right: 5px solid var(--primary-color); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .card-custom { background: white; border-radius: 12px; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); padding: 20px; margin-bottom: 25px; }
+        .table-responsive { max-height: 500px; overflow-y: auto; }
+        .hidden-section { display: none !important; }
+    </style>
 </head>
 <body>
 
-<!-- شاشة تسجيل الدخول -->
-<div id="loginScreen" class="d-flex align-items-center justify-content-center" style="min-height:100vh; background: linear-gradient(135deg, #0d2137, #1a3a5c);">
-  <div class="card p-4" style="width: 400px; max-width: 90%;">
-    <div class="text-center mb-4">
-      <h2>🏭 نظام ERP</h2>
-      <p class="text-muted">للمصانع الكيميائية</p>
+    <!-- 1. شاشة تسجيل الدخول -->
+    <div id="loginSection" class="login-wrapper">
+        <div class="login-card">
+            <div class="text-center mb-4">
+                <i class="bi bi-gear-wide-connected text-success display-3"></i>
+                <h3 class="mt-2 text-dark">نظام Chemical ERP</h3>
+                <p class="text-muted">المصانع والمنشآت الكيميائية</p>
+            </div>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label class="form-label">اسم المستخدم</label>
+                    <input type="text" id="usernameInput" class="form-control" placeholder="أدخل اسم المستخدم" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">كلمة المرور</label>
+                    <input type="password" id="passwordInput" class="form-control" placeholder="أدخل كلمة المرور" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100 py-2">تسجيل الدخول</button>
+            </form>
+            <div class="mt-4 p-2 bg-light border rounded text-muted small">
+                <strong>حسابات التجربة:</strong><br>
+                - مدير: admin / admin123<br>
+                - مساعد: assistant / assist123<br>
+                - معمل: lab / lab123<br>
+                - مخازن: warehouse / ware123<br>
+                - موظف: employee1 / emp123
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-      <label class="form-label">اسم المستخدم</label>
-      <input type="text" id="loginUser" class="form-control" placeholder="admin">
+
+    <!-- 2. واجهة النظام الرئيسية -->
+    <div id="appSection" class="container-fluid hidden-section">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 sidebar px-0">
+                <div class="p-3 text-center border-bottom border-secondary">
+                    <h5 class="text-success m-0"><i class="bi bi-gear-wide-connected"></i> Chemical ERP</h5>
+                    <small class="text-muted" id="userRoleBadge">المستخدم: مدير عام</small>
+                </div>
+                <div class="nav flex-column mt-2" id="sidebarMenu">
+                    <a class="nav-link active" data-sec="dashboard" href="#"><i class="bi bi-speedometer2"></i> لوحة التحكم</a>
+                    <a class="nav-link" data-sec="products" href="#"><i class="bi bi-boxes"></i> المنتجات والمخازن</a>
+                    <a class="nav-link" data-sec="invoices" href="#"><i class="bi bi-receipt"></i> الفواتير والبيع</a>
+                    <a class="nav-link" data-sec="batches" href="#"><i class="bi bi-upc-scan"></i> تتبع الدفعات</a>
+                    <a class="nav-link" data-sec="lab" href="#"><i class="bi bi-eyedropper"></i> المعمل الكيميائي</a>
+                    <a class="nav-link" data-sec="employees" href="#"><i class="bi bi-person-badge"></i> الموظفين</a>
+                    <a class="nav-link" data-sec="attendance" href="#"><i class="bi bi-clock-history"></i> الحضور والبصمة</a>
+                    <a class="nav-link" data-sec="payroll" href="#"><i class="bi bi-cash-stack"></i> الرواتب والأجور</a>
+                    <a class="nav-link" data-sec="quality" href="#"><i class="bi bi-shield-check"></i> الجودة والأيزو</a>
+                    <a class="nav-link" data-sec="sds" href="#"><i class="bi bi-file-earmark-medical"></i> صحائف السلامة SDS</a>
+                    <a class="nav-link" data-sec="waste" href="#"><i class="bi bi-trash"></i> المخلفات الكيميائية</a>
+                    <a class="nav-link" data-sec="maintenance" href="#"><i class="bi bi-wrench"></i> الصيانة الوقائية</a>
+                    <a class="nav-link" data-sec="shipping" href="#"><i class="bi bi-truck"></i> الشحن واللوجستيات</a>
+                    <a class="nav-link" data-sec="complaints" href="#"><i class="bi bi-exclamation-triangle"></i> الشكاوى والمتابعة</a>
+                    <a class="nav-link" data-sec="isoReports" href="#"><i class="bi bi-file-earmark-pdf"></i> تقارير الأيزو</a>
+                    <a class="nav-link" data-sec="users" href="#"><i class="bi bi-people"></i> إدارة المستخدمين</a>
+                </div>
+                <div class="p-3 border-top border-secondary mt-auto">
+                    <button class="btn btn-outline-danger w-100 btn-sm" onclick="logout()"><i class="bi bi-box-arrow-right"></i> تسجيل الخروج</button>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-md-9 col-lg-10 p-4">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                    <h4 id="sectionTitle" class="m-0">لوحة التحكم الإستراتيجية</h4>
+                    <div>
+                        <span class="badge bg-success p-2" id="currentUsername">المستخدم الحالي: admin</span>
+                    </div>
+                </div>
+
+                <!-- 16 Dynamic Sections -->
+                <div id="contentArea">
+
+                    <!-- Dashboard -->
+                    <div class="sec-content" id="sec-dashboard">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-3">
+                                <div class="stat-card" style="border-color: #2196F3;">
+                                    <h6>إجمالي المنتجات</h6>
+                                    <h3 id="dash-prod-count">0</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card" style="border-color: #4CAF50;">
+                                    <h6>إجمالي المبيعات</h6>
+                                    <h3 id="dash-sales-total">0 ج.م</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card" style="border-color: #FF9800;">
+                                    <h6>عينات المعمل اليوم</h6>
+                                    <h3 id="dash-lab-count">0</h3>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-card" style="border-color: #f44336;">
+                                    <h6>الشكاوى النشطة</h6>
+                                    <h3 id="dash-comp-count">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-custom">
+                            <h5>📢 تنبيهات النظام والأيزو</h5>
+                            <ul class="list-group mt-3" id="dash-alerts-list">
+                                <li class="list-group-item list-group-item-success">✅ النظام جاهز ومحدث وفقاً لمعايير الأيزو والتصدير.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Template Module Component (Products, Invoices, Lab, etc.) -->
+                    <!-- Combined Dynamic Template Renderer for Sections 2 to 16 -->
+                    <div class="sec-content hidden-section" id="sec-generic">
+                        <div class="card-custom">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 id="genericSecTitle">إدارة البيانات</h5>
+                                <button class="btn btn-success btn-sm" id="genericAddBtn" onclick="openAddModal()"><i class="bi bi-plus-lg"></i> إضافة جديد</button>
+                            </div>
+                            <div class="row g-2 mb-3">
+                                <div class="col-md-8">
+                                    <input type="text" id="genericSearch" class="form-control" placeholder="بحث شامل في الجدول..." onkeyup="filterTable()">
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <button class="btn btn-outline-secondary w-100" onclick="exportCSV()"><i class="bi bi-file-earmark-spreadsheet"></i> تصدير CSV</button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped align-middle" id="genericTable">
+                                    <thead class="table-dark" id="genericTableHead"></thead>
+                                    <tbody id="genericTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="mb-3">
-      <label class="form-label">كلمة المرور</label>
-      <input type="password" id="loginPass" class="form-control" placeholder="admin123">
+
+    <!-- Modal for Adding/Editing Data -->
+    <div class="modal fade" id="dataModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">إضافة سجل جديد</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="genericForm" class="row g-3"></form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-success" onclick="saveData()">حفظ البيانات</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <button class="btn btn-primary w-100" onclick="login()">🔐 تسجيل الدخول</button>
-    <div class="mt-3 text-muted small text-center">
-      <div>admin / admin123 (مدير)</div>
-      <div>assistant / assist123 (مساعد)</div>
-      <div>lab / lab123 (معمل)</div>
-      <div>warehouse / ware123 (مخازن)</div>
-      <div>employee1 / emp123 (موظف)</div>
-    </div>
-  </div>
-</div>
 
-<!-- النظام الرئيسي -->
-<div id="mainSystem" style="display:none;">
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 1. المستخدمين المعتمدين وصلاحياتهم
+        const usersDB = {
+            'admin': { pass: 'admin123', name: 'مدير عام', role: 'admin', secs: ['dashboard','products','invoices','batches','lab','employees','attendance','payroll','quality','sds','waste','maintenance','shipping','complaints','isoReports','users'] },
+            'assistant': { pass: 'assist123', name: 'مساعد مدير', role: 'assistant', secs: ['dashboard','products','invoices','batches','lab','employees','attendance','payroll','quality','sds','waste','maintenance','shipping','complaints','isoReports'] },
+            'lab': { pass: 'lab123', name: 'فني معمل', role: 'lab', secs: ['dashboard','lab','quality','sds'] },
+            'warehouse': { pass: 'ware123', name: 'أمين مخزن', role: 'warehouse', secs: ['dashboard','products','invoices','batches','shipping','waste'] },
+            'employee1': { pass: 'emp123', name: 'موظف', role: 'employee', secs: ['dashboard','attendance','payroll'] }
+        };
 
-<!-- Sidebar -->
-<div class="sidebar">
-  <h4>🏭 ERP المصنع</h4>
-  <div class="user-badge text-center mb-3" id="userBadge"></div>
-  
-  <a onclick="showSection('dashboard')" class="nav-link active"><i class="bi bi-speedometer2"></i> لوحة التحكم</a>
-  <a onclick="showSection('products')" class="nav-link"><i class="bi bi-boxes"></i> المنتجات والمخازن</a>
-  <a onclick="showSection('invoices')" class="nav-link"><i class="bi bi-receipt"></i> الفواتير</a>
-  <a onclick="showSection('batches')" class="nav-link"><i class="bi bi-upc-scan"></i> تتبع الدفعات</a>
-  <a onclick="showSection('lab')" class="nav-link"><i class="bi bi-droplet"></i> المعمل الكيميائي</a>
-  <a onclick="showSection('hr')" class="nav-link"><i class="bi bi-people"></i> الموارد البشرية</a>
-  <a onclick="showSection('attendance')" class="nav-link"><i class="bi bi-fingerprint"></i> الحضور والانصراف</a>
-  <a onclick="showSection('payroll')" class="nav-link"><i class="bi bi-cash-stack"></i> الرواتب</a>
-  <a onclick="showSection('qc')" class="nav-link"><i class="bi bi-clipboard-check"></i> مراقبة الجودة</a>
-  <a onclick="showSection('sds')" class="nav-link"><i class="bi bi-file-medical"></i> صحائف السلامة</a>
-  <a onclick="showSection('waste')" class="nav-link"><i class="bi bi-trash"></i> المخلفات</a>
-  <a onclick="showSection('maintenance')" class="nav-link"><i class="bi bi-wrench"></i> الصيانة</a>
-  <a onclick="showSection('shipping')" class="nav-link"><i class="bi bi-truck"></i> سجل الشحن</a>
-  <a onclick="showSection('complaints')" class="nav-link"><i class="bi bi-exclamation-circle"></i> الشكاوى</a>
-  <a onclick="showSection('iso')" class="nav-link"><i class="bi bi-file-check"></i> تقارير الأيزو</a>
-  <a onclick="showSection('users')" class="nav-link" id="usersNav"><i class="bi bi-person-gear"></i> المستخدمين</a>
-  <hr style="border-color:#2a5a8c;">
-  <a onclick="logout()"><i class="bi bi-box-arrow-right"></i> تسجيل الخروج</a>
-</div>
+        let currentUser = null;
+        let activeSection = 'dashboard';
+        let modalInstance = null;
+        let editingIndex = -1;
 
-<!-- Main Content -->
-<div class="main-content">
+        // 2. الهياكل والبيانات الرئيسية (LocalStorage Storage)
+        let store = JSON.parse(localStorage.getItem('chem_erp_db')) || {
+            products: [{ id:1, name:'صودا كاوية', hscode:'2815.11', qty:500, unit:'كجم', price:45 }],
+            invoices: [{ id:1, type:'بيع', customer:'شركة الأمل', total:15000, tax:2100, date:'2026-09-01' }],
+            batches: [{ id:1, code:'B-2026-01', prod:'صودا كاوية', raw:'مادة سائلة', status:'مقبول' }],
+            lab: [{ id:1, sample:'عينة A1', ph:'7.4', viscosity:'1200', result:'مطابق' }],
+            employees: [{ id:1, name:'أحمد محمود', role:'مهندس تشغيل', phone:'0100000000' }],
+            attendance: [{ id:1, emp:'أحمد محمود', date:'2026-09-10', status:'حضور 08:00' }],
+            payroll: [{ id:1, emp:'أحمد محمود', basic:8000, tax:800, net:7200 }],
+            quality: [{ id:1, batch:'B-2026-01', iso:'ISO9001', check:'اجتاز الاختيار' }],
+            sds: [{ id:1, prod:'صودا كاوية', danger:'مادة حارقة', safety:'ارتداء قفازات' }],
+            waste: [{ id:1, type:'حمأة كيميائية', qty:'100 كجم', contractor:'شركة التدوير' }],
+            maintenance: [{ id:1, machine:'خلاط رئيسي', type:'وقائية', status:'تمت الصيانة' }],
+            shipping: [{ id:1, order:'ORD-99', destination:'الإسكندرية', status:'في الطريق' }],
+            complaints: [{ id:1, client:'مؤسسة الشرق', issue:'تأخير التوريد', status:'قيد المتابعة' }],
+            isoReports: [{ id:1, title:'تقرير جودة Q3', lang:'عربي', audit:'مقبول' }],
+            users: [{ id:1, uname:'admin', role:'مدير عام', status:'نشط' }]
+        };
 
-<!-- ============ Dashboard ============ -->
-<div id="dashboard" class="section active">
-  <h2>📊 لوحة التحكم</h2>
-  <div class="row g-3 mt-3">
-    <div class="col-md-3"><div class="stat-card" style="background: linear-gradient(135deg, #4CAF50, #388E3C);"><i class="bi bi-boxes"></i><h2 id="statProducts">0</h2><p>المنتجات</p></div></div>
-    <div class="col-md-3"><div class="stat-card" style="background: linear-gradient(135deg, #2196F3, #1976D2);"><i class="bi bi-people"></i><h2 id="statEmployees">0</h2><p>الموظفين</p></div></div>
-    <div class="col-md-3"><div class="stat-card" style="background: linear-gradient(135deg, #FF9800, #F57C00);"><i class="bi bi-receipt"></i><h2 id="statInvoices">0</h2><p>الفواتير</p></div></div>
-    <div class="col-md-3"><div class="stat-card" style="background: linear-gradient(135deg, #9C27B0, #7B1FA2);"><i class="bi bi-droplet"></i><h2 id="statSamples">0</h2><p>عينات المعمل</p></div></div>
-  </div>
-  <div class="row g-3 mt-3">
-    <div class="col-md-6"><div class="card"><div class="card-header">⚠️ تنبيهات المخزون</div><div class="card-body" id="lowStockAlerts">لا توجد تنبيهات</div></div></div>
-    <div class="col-md-6"><div class="card"><div class="card-header">💰 ملخص الإيرادات</div><div class="card-body"><h3 id="totalRevenue" class="text-success">0 ج.م</h3></div></div></div>
-  </div>
-</div>
+        function saveToStorage() {
+            localStorage.setItem('chem_erp_db', JSON.stringify(store));
+            updateDashboardStats();
+        }
 
-<!-- ============ Products ============ -->
-<div id="products" class="section">
-  <h2>📦 المنتجات والمخازن</h2>
-  <button class="btn btn-success btn-action" onclick="openProductModal()"><i class="bi bi-plus-circle"></i> إضافة منتج</button>
-  <button class="btn btn-info btn-action" onclick="exportTable('productsTable', 'المنتجات')"><i class="bi bi-download"></i> تصدير CSV</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped table-hover" id="productsTable">
-      <thead><tr><th>#</th><th>الكود</th><th>الاسم</th><th>HS Code</th><th>النوع</th><th>الكمية</th><th>الوحدة</th><th>السعر</th><th>إجراءات</th></tr></thead>
-      <tbody id="productsBody"></tbody>
-    </table>
-  </div></div>
-</div>
+        // 3. خريطة الأقسام والحقول الخاصة بكل قسم
+        const sectionConfigs = {
+            products: { title: 'المنتجات والمخازن', fields: [{k:'name',l:'اسم المنتج'},{k:'hscode',l:'HS Code'},{k:'qty',l:'الكمية',t:'number'},{k:'unit',l:'الوحدة'},{k:'price',l:'السعر',t:'number'}] },
+            invoices: { title: 'الفواتير والمبيعات', fields: [{k:'type',l:'نوع الفاتورة'},{k:'customer',l:'العميل/المورد'},{k:'total',l:'الإجمالي',t:'number'},{k:'tax',l:'الضريبة (14%)',t:'number'},{k:'date',l:'التاريخ',t:'date'}] },
+            batches: { title: 'تتبع الدفعات', fields: [{k:'code',l:'رقم الدفعة'},{k:'prod',l:'المنتج'},{k:'raw',l:'الخامات المستخدمة'},{k:'status',l:'الحالة'}] },
+            lab: { title: 'المعمل الكيميائي', fields: [{k:'sample',l:'اسم العينة'},{k:'ph',l:'درجة الحموضة pH'},{k:'viscosity',l:'اللزوجة'},{k:'result',l:'نتيجة التحليل'}] },
+            employees: { title: 'شؤون الموظفين', fields: [{k:'name',l:'اسم الموظف'},{k:'role',l:'الوظيفة'},{k:'phone',l:'الهاتف'}] },
+            attendance: { title: 'الحضور والبصمة', fields: [{k:'emp',l:'الموظف'},{k:'date',l:'التاريخ',t:'date'},{k:'status',l:'حالة الحضور'}] },
+            payroll: { title: 'كشوف الرواتب', fields: [{k:'emp',l:'الموظف'},{k:'basic',l:'الراتب الأساسي',t:'number'},{k:'tax',l:'الستقطاعات والضرائب',t:'number'},{k:'net',l:'الصافي',t:'number'}] },
+            quality: { title: 'إدارة الجودة', fields: [{k:'batch',l:'رقم الدفعة'},{k:'iso',l:'معيار الأيزو'},{k:'check',l:'نتيجة الفحص'}] },
+            sds: { title: 'صحائف السلامة SDS', fields: [{k:'prod',l:'اسم المادة'},{k:'danger',l:'مخاطر المادة'},{k:'safety',l:'تعليمات السلامة'}] },
+            waste: { title: 'إدارة المخلفات', fields: [{k:'type',l:'نوع النفايات'},{k:'qty',l:'الكمية'},{k:'contractor',l:'المتعهد'}] },
+            maintenance: { title: 'الصيانة والإنتاج', fields: [{k:'machine',l:'المعدة/الآلة'},{k:'type',l:'نوع الصيانة'},{k:'status',l:'الحالة'}] },
+            shipping: { title: 'الشحن واللوجستيات', fields: [{k:'order',l:'رقم الشحنة'},{k:'destination',l:'جهة الوصول'},{k:'status',l:'حالة الشحن'}] },
+            complaints: { title: 'الشكاوى والاستجابة', fields: [{k:'client',l:'العميل'},{k:'issue',l:'موضوع الشكوى'},{k:'status',l:'موقف الاستجابة'}] },
+            isoReports: { title: 'تقارير الأيزو', fields: [{k:'title',l:'عنوان التقرير'},{k:'lang',l:'اللغة'},{k:'audit',l:'نتيجة التدقيق'}] },
+            users: { title: 'إدارة مستخدمي النظام', fields: [{k:'uname',l:'اسم المستخدم'},{k:'role',l:'الصلاحية'},{k:'status',l:'الحالة'}] }
+        };
 
-<!-- ============ Invoices ============ -->
-<div id="invoices" class="section">
-  <h2>🧾 الفواتير</h2>
-  <button class="btn btn-success btn-action" onclick="openInvoiceModal()"><i class="bi bi-plus-circle"></i> فاتورة جديدة</button>
-  <button class="btn btn-info btn-action" onclick="exportTable('invoicesTable', 'الفواتير')"><i class="bi bi-download"></i> تصدير CSV</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped" id="invoicesTable">
-      <thead><tr><th>#</th><th>الرقم</th><th>العميل/المورد</th><th>النوع</th><th>التاريخ</th><th>الإجمالي</th><th>الضريبة</th><th>الصافي</th></tr></thead>
-      <tbody id="invoicesBody"></tbody>
-    </table>
-  </div></div>
-</div>
+        // 4. تسجيل الدخول والتحكم بالصلاحيات
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const u = document.getElementById('usernameInput').value;
+            const p = document.getElementById('passwordInput').value;
 
-<!-- ============ Batches ============ -->
-<div id="batches" class="section">
-  <h2>🏷️ تتبع الدفعات</h2>
-  <button class="btn btn-success btn-action" onclick="openBatchModal()"><i class="bi bi-plus-circle"></i> دفعة جديدة</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped" id="batchesTable">
-      <thead><tr><th>#</th><th>رقم الدفعة</th><th>المنتج</th><th>الكمية</th><th>تاريخ الإنتاج</th><th>تاريخ الصلاحية</th><th>الحالة</th></tr></thead>
-      <tbody id="batchesBody"></tbody>
-    </table>
-  </div></div>
-</div>
+            if (usersDB[u] && usersDB[u].pass === p) {
+                currentUser = usersDB[u];
+                document.getElementById('loginSection').classList.add('hidden-section');
+                document.getElementById('appSection').classList.remove('hidden-section');
+                document.getElementById('currentUsername').innerText = `المستخدم: ${currentUser.name}`;
+                document.getElementById('userRoleBadge').innerText = `الصلاحية: ${currentUser.name}`;
 
-<!-- ============ Lab ============ -->
-<div id="lab" class="section">
-  <h2>🧪 المعمل الكيميائي</h2>
-  <button class="btn btn-success btn-action" onclick="openSampleModal()"><i class="bi bi-plus-circle"></i> عينة جديدة</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped" id="labTable">
-      <thead><tr><th>#</th><th>كود العينة</th><th>المنتج</th><th>النوع</th><th>pH</th><th>اللزوجة</th><th>النتيجة</th><th>التاريخ</th></tr></thead>
-      <tbody id="labBody"></tbody>
-    </table>
-  </div></div>
-</div>
+                // تصفية Sidebar بناءً على الصلاحيات
+                document.querySelectorAll('#sidebarMenu .nav-link').forEach(link => {
+                    const sec = link.getAttribute('data-sec');
+                    if (currentUser.secs.includes(sec)) {
+                        link.classList.remove('hidden-section');
+                    } else {
+                        link.classList.add('hidden-section');
+                    }
+                });
 
-<!-- ============ HR ============ -->
-<div id="hr" class="section">
-  <h2>👥 الموارد البشرية</h2>
-  <button class="btn btn-success btn-action" onclick="openEmployeeModal()"><i class="bi bi-plus-circle"></i> موظف جديد</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped" id="employeesTable">
-      <thead><tr><th>#</th><th>الكود</th><th>الاسم</th><th>الوظيفة</th><th>القسم</th><th>الراتب</th><th>رقم البصمة</th></tr></thead>
-      <tbody id="employeesBody"></tbody>
-    </table>
-  </div></div>
-</div>
+                modalInstance = new bootstrap.Modal(document.getElementById('dataModal'));
+                switchSection('dashboard');
+                updateDashboardStats();
+            } else {
+                alert('اسم المستخدم أو كلمة المرور غير صحيحة!');
+            }
+        });
 
-<!-- ============ Attendance ============ -->
-<div id="attendance" class="section">
-  <h2>🖐️ الحضور والانصراف</h2>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card"><div class="card-header">تسجيل بالبصمة</div><div class="card-body">
-        <input type="text" id="fingerprintInput" class="form-control mb-2" placeholder="أدخل رقم البصمة">
-        <button class="btn btn-success w-100 mb-2" onclick="checkIn()"><i class="bi bi-box-arrow-in-right"></i> تسجيل حضور</button>
-        <button class="btn btn-warning w-100" onclick="checkOut()"><i class="bi bi-box-arrow-right"></i> تسجيل انصراف</button>
-      </div></div>
-    </div>
-    <div class="col-md-6">
-      <div class="card"><div class="card-header">حضور اليوم</div><div class="card-body" id="attendanceToday"></div></div>
-    </div>
-  </div>
-</div>
+        function logout() {
+            document.getElementById('appSection').classList.add('hidden-section');
+            document.getElementById('loginSection').classList.remove('hidden-section');
+            document.getElementById('loginForm').reset();
+        }
 
-<!-- ============ Payroll ============ -->
-<div id="payroll" class="section">
-  <h2>💰 الرواتب</h2>
-  <button class="btn btn-primary btn-action" onclick="generatePayroll()"><i class="bi bi-gear"></i> توليد رواتب الشهر</button>
-  <button class="btn btn-info btn-action" onclick="exportTable('payrollTable', 'الرواتب')"><i class="bi bi-download"></i> تصدير CSV</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped" id="payrollTable">
-      <thead><tr><th>#</th><th>الموظف</th><th>الأساسي</th><th>إضافي</th><th>خصومات</th><th>الصافي</th><th>الحالة</th><th>إجراء</th></tr></thead>
-      <tbody id="payrollBody"></tbody>
-    </table>
-  </div></div>
-</div>
+        // 5. التنقل بين الأقسام
+        document.querySelectorAll('#sidebarMenu .nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('#sidebarMenu .nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                const sec = this.getAttribute('data-sec');
+                switchSection(sec);
+            });
+        });
 
-<!-- ============ QC ============ -->
-<div id="qc" class="section">
-  <h2>📋 مراقبة الجودة</h2>
-  <button class="btn btn-success btn-action" onclick="openQCModal()"><i class="bi bi-plus-circle"></i> فحص جديد</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped" id="qcTable">
-      <thead><tr><th>#</th><th>رقم الدفعة</th><th>التاريخ</th><th>القياسات</th><th>النتيجة</th><th>الفاحص</th></tr></thead>
-      <tbody id="qcBody"></tbody>
-    </table>
-  </div></div>
-</div>
+        function switchSection(secKey) {
+            activeSection = secKey;
+            document.querySelectorAll('.sec-content').forEach(s => s.classList.add('hidden-section'));
 
-<!-- ============ SDS ============ -->
-<div id="sds" class="section">
-  <h2>📄 صحائف السلامة (SDS)</h2>
-  <button class="btn btn-success btn-action" onclick="openSDSModal()"><i class="bi bi-plus-circle"></i> SDS جديدة</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped" id="sdsTable">
-      <thead><tr><th>#</th><th>المنتج</th><th>تاريخ الإصدار</th><th>تاريخ الانتهاء</th><th>عبارات الخطر</th></tr></thead>
-      <tbody id="sdsBody"></tbody>
-    </table>
-  </div></div>
-</div>
+            if (secKey === 'dashboard') {
+                document.getElementById('sec-dashboard').classList.remove('hidden-section');
+                document.getElementById('sectionTitle').innerText = 'لوحة التحكم الإستراتيجية';
+            } else {
+                const genericSec = document.getElementById('sec-generic');
+                genericSec.classList.remove('hidden-section');
+                const config = sectionConfigs[secKey];
+                document.getElementById('sectionTitle').innerText = config.title;
+                document.getElementById('genericSecTitle').innerText = `سجلات: ${config.title}`;
+                renderTable(secKey);
+            }
+        }
 
-<!-- ============ Waste ============ -->
-<div id="waste" class="section">
-  <h2>☣️ المخلفات الكيميائية</h2>
-  <button class="btn btn-success btn-action" onclick="openWasteModal()"><i class="bi bi-plus-circle"></i> تسجيل مخلفات</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped" id="wasteTable">
-      <thead><tr><th>#</th><th>التاريخ</th><th>المادة</th><th>الكمية (طن)</th><th>طريقة التخلص</th><th>المتعهد</th></tr></thead>
-      <tbody id="wasteBody"></tbody>
-    </table>
-  </div></div>
-</div>
+        // 6. عرض الجداول ودعم الإضافة، التعديل، والحذف
+        function renderTable(secKey) {
+            const config = sectionConfigs[secKey];
+            const data = store[secKey] || [];
+            const thead = document.getElementById('genericTableHead');
+            const tbody = document.getElementById('genericTableBody');
 
-<!-- ============ Maintenance ============ -->
-<div id="maintenance" class="section">
-  <h2>🔧 الصيانة الدورية</h2>
-  <button class="btn btn-success btn-action" onclick="openMaintenanceModal()"><i class="bi bi-plus-circle"></i> مهمة صيانة</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped" id="maintenanceTable">
-      <thead><tr><th>#</th><th>الماكينة</th><th>النوع</th><th>التاريخ</th><th>الحالة</th><th>إجراء</th></tr></thead>
-      <tbody id="maintenanceBody"></tbody>
-    </table>
-  </div></div>
-</div>
+            // الترويسة
+            let headHTML = '<tr><th>#</th>';
+            config.fields.forEach(f => headHTML += `<th>${f.l}</th>`);
+            headHTML += '<th class="text-center">إجراءات</th></tr>';
+            thead.innerHTML = headHTML;
 
-<!-- ============ Shipping ============ -->
-<div id="shipping" class="section">
-  <h2>🚢 سجل الشحن</h2>
-  <button class="btn btn-success btn-action" onclick="openShippingModal()"><i class="bi bi-plus-circle"></i> شحنة جديدة</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped" id="shippingTable">
-      <thead><tr><th>#</th><th>رقم الشحنة</th><th>رقم الدفعة</th><th>المنتج</th><th>الكمية</th><th>الوجهة</th><th>التاريخ</th></tr></thead>
-      <tbody id="shippingBody"></tbody>
-    </table>
-  </div></div>
-</div>
+            // البيانات
+            let bodyHTML = '';
+            data.forEach((row, idx) => {
+                bodyHTML += `<tr><td>${idx + 1}</td>`;
+                config.fields.forEach(f => {
+                    bodyHTML += `<td>${row[f.k] || ''}</td>`;
+                });
+                bodyHTML += `
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-primary me-1" onclick="openEditModal(${idx})"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteRecord(${idx})"><i class="bi bi-trash"></i></button>
+                    </td>
+                </tr>`;
+            });
+            tbody.innerHTML = bodyHTML || '<tr><td colspan="10" class="text-center text-muted">لا توجد بيانات مسجلة</td></tr>';
+        }
 
-<!-- ============ Complaints ============ -->
-<div id="complaints" class="section">
-  <h2>📋 سجل الشكاوى</h2>
-  <button class="btn btn-success btn-action" onclick="openComplaintModal()"><i class="bi bi-plus-circle"></i> شكوى جديدة</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped" id="complaintsTable">
-      <thead><tr><th>#</th><th>الرقم</th><th>العميل</th><th>المنتج</th><th>الوصف</th><th>الحالة</th><th>تاريخ الرد</th></tr></thead>
-      <tbody id="complaintsBody"></tbody>
-    </table>
-  </div></div>
-</div>
+        function openAddModal() {
+            editingIndex = -1;
+            document.getElementById('modalTitle').innerText = `إضافة سجل جديد - ${sectionConfigs[activeSection].title}`;
+            buildModalForm();
+            modalInstance.show();
+        }
 
-<!-- ============ ISO ============ -->
-<div id="iso" class="section">
-  <h2>📋 تقارير الأيزو</h2>
-  <div class="card"><div class="card-body">
-    <button class="btn btn-primary btn-action" onclick="generateISOReport('ar')"><i class="bi bi-file-earmark-text"></i> تقرير عربي</button>
-    <button class="btn btn-primary btn-action" onclick="generateISOReport('en')"><i class="bi bi-file-earmark-text"></i> تقرير إنجليزي</button>
-    <button class="btn btn-success btn-action" onclick="window.print()"><i class="bi bi-printer"></i> طباعة</button>
-    <div id="isoReportContent" class="mt-3"></div>
-  </div></div>
-</div>
+        function openEditModal(idx) {
+            editingIndex = idx;
+            document.getElementById('modalTitle').innerText = `تعديل سجل - ${sectionConfigs[activeSection].title}`;
+            buildModalForm(store[activeSection][idx]);
+            modalInstance.show();
+        }
 
-<!-- ============ Users ============ -->
-<div id="users" class="section">
-  <h2>👤 إدارة المستخدمين</h2>
-  <button class="btn btn-success btn-action" onclick="openUserModal()"><i class="bi bi-plus-circle"></i> مستخدم جديد</button>
-  <div class="card mt-3"><div class="card-body">
-    <table class="table table-striped" id="usersTable">
-      <thead><tr><th>#</th><th>اسم المستخدم</th><th>الاسم الكامل</th><th>الدور</th><th>الحالة</th></tr></thead>
-      <tbody id="usersBody"></tbody>
-    </table>
-  </div></div>
-</div>
+        function buildModalForm(data = {}) {
+            const form = document.getElementById('genericForm');
+            const fields = sectionConfigs[activeSection].fields;
+            let html = '';
 
-</div><!-- main-content -->
-</div><!-- main-system -->
+            fields.forEach(f => {
+                const val = data[f.k] !== undefined ? data[f.k] : '';
+                const type = f.t || 'text';
+                html += `
+                    <div class="col-md-6">
+                        <label class="form-label">${f.l}</label>
+                        <input type="${type}" id="field_${f.k}" class="form-control" value="${val}" required>
+                    </div>
+                `;
+            });
+            form.innerHTML = html;
+        }
 
-<!-- Modal Container -->
-<div class="modal fade" id="genericModal" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header"><h5 class="modal-title" id="modalTitle"></h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-      <div class="modal-body" id="modalBody"></div>
-      <div class="modal-footer"><button class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button><button class="btn btn-primary" id="modalSaveBtn">حفظ</button></div>
-    </div>
-  </div>
-</div>
+        function saveData() {
+            const fields = sectionConfigs[activeSection].fields;
+            let record = store[activeSection] && editingIndex >= 0 ? store[activeSection][editingIndex] : { id: Date.now() };
 
-<!-- Toast -->
-<div class="alert-toast" id="toast"></div>
+            fields.forEach(f => {
+                const el = document.getElementById(`field_${f.k}`);
+                if (el) record[f.k] = f.t === 'number' ? parseFloat(el.value) || 0 : el.value;
+            });
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-// ============ قاعدة البيانات المحلية ============
-const DB = {
-  products: JSON.parse(localStorage.getItem('products') || '[]'),
-  invoices: JSON.parse(localStorage.getItem('invoices') || '[]'),
-  batches: JSON.parse(localStorage.getItem('batches') || '[]'),
-  employees: JSON.parse(localStorage.getItem('employees') || '[]'),
-  attendance: JSON.parse(localStorage.getItem('attendance') || '[]'),
-  payroll: JSON.parse(localStorage.getItem('payroll') || '[]'),
-  labSamples: JSON.parse(localStorage.getItem('labSamples') || '[]'),
-  qc: JSON.parse(localStorage.getItem('qc') || '[]'),
-  sds: JSON.parse(localStorage.getItem('sds') || '[]'),
-  waste: JSON.parse(localStorage.getItem('waste') || '[]'),
-  maintenance: JSON.parse(localStorage.getItem('maintenance') || '[]'),
-  shipping: JSON.parse(localStorage.getItem('shipping') || '[]'),
-  complaints: JSON.parse(localStorage.getItem('complaints') || '[]'),
-  users: JSON.parse(localStorage.getItem('users') || '[]')
-};
+            if (!store[activeSection]) store[activeSection] = [];
 
-function save(key) { localStorage.setItem(key, JSON.stringify(DB[key])); updateDashboard(); }
+            if (editingIndex >= 0) {
+                store[activeSection][editingIndex] = record;
+            } else {
+                store[activeSection].push(record);
+            }
 
-// ============ المستخدمين والصلاحيات ============
-const DEFAULT_USERS = [
-  { username: 'admin', password: 'admin123', fullName: 'المدير العام', role: 'manager' },
-  { username: 'assistant', password: 'assist123', fullName: 'مساعد المدير', role: 'assistant_manager' },
-  { username: 'lab', password: 'lab123', fullName: 'مسؤول المعمل', role: 'lab_tech' },
-  { username: 'warehouse', password: 'ware123', fullName: 'مسؤول المخازن', role: 'warehouse' },
-  { username: 'employee1', password: 'emp123', fullName: 'أحمد محمد', role: 'employee' },
-  { username: 'employee2', password: 'emp456', fullName: 'محمد علي', role: 'employee' }
-];
+            saveToStorage();
+            renderTable(activeSection);
+            modalInstance.hide();
+        }
 
-if (DB.users.length === 0) { DB.users = [...DEFAULT_USERS]; save('users'); }
+        function deleteRecord(idx) {
+            if (confirm('هل أنت تأكد من رغبتك في حذف هذا السجل؟')) {
+                store[activeSection].splice(idx, 1);
+                saveToStorage();
+                renderTable(activeSection);
+            }
+        }
 
-const ROLE_PERMS = {
-  manager: ['dashboard','products','invoices','batches','lab','hr','attendance','payroll','qc','sds','waste','maintenance','shipping','complaints','iso','users'],
-  assistant_manager: ['dashboard','products','invoices','batches','lab','hr','attendance','payroll','qc','sds','waste','maintenance','shipping','complaints','iso'],
-  lab_tech: ['dashboard','lab','qc','sds','batches'],
-  warehouse: ['dashboard','products','invoices','batches','shipping'],
-  employee: ['dashboard','attendance','payroll']
-};
+        // 7. تصفية وتصنيق البيانات في البحث السريع
+        function filterTable() {
+            const q = document.getElementById('genericSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#genericTableBody tr');
+            rows.forEach(r => {
+                r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
+            });
+        }
 
-let currentUser = null;
+        // 8. تصدير CSV
+        function exportCSV() {
+            const data = store[activeSection] || [];
+            if (!data.length) return alert('لا توجد بيانات للتصدير!');
+            const fields = sectionConfigs[activeSection].fields;
+            
+            let csv = fields.map(f => f.l).join(',') + '\n';
+            data.forEach(r => {
+                csv += fields.map(f => `"${r[f.k] || ''}"`).join(',') + '\n';
+            });
 
-function login() {
-  const u = document.getElementById('loginUser').value.trim();
-  const p = document.getElementById('loginPass').value.trim();
-  const user = DB.users.find(x => x.username === u && x.password === p);
-  if (!user) { alert('❌ اسم المستخدم أو كلمة المرور غير صحيحة'); return; }
-  currentUser = user;
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('mainSystem').style.display = 'block';
-  document.getElementById('userBadge').textContent = `👤 ${user.fullName} (${user.role})`;
-  applyPermissions();
-  showSection('dashboard');
-}
+            const blob = new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${activeSection}_export.csv`;
+            link.click();
+        }
 
-function logout() {
-  currentUser = null;
-  document.getElementById('mainSystem').style.display = 'none';
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('loginUser').value = '';
-  document.getElementById('loginPass').value = '';
-}
-
-function applyPermissions() {
-  const allowed = ROLE_PERMS[currentUser.role] || [];
-  document.querySelectorAll('.sidebar a[onclick^="showSection"]').forEach(a => {
-    const section = a.getAttribute('onclick').match(/'([^']+)'/)[1];
-    a.style.display = allowed.includes(section) ? 'block' : 'none';
-  });
-}
-
-function showSection(id) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
-  event.target.classList.add('active');
-  renderAll();
-}
-
-// ============ Toast ============
-function toast(msg, type = 'success') {
-  const t = document.getElementById('toast');
-  t.innerHTML = `<div class="alert alert-${type} shadow">${msg}</div>`;
-  setTimeout(() => t.innerHTML = '', 3000);
-}
-
-// ============ Modal Helper ============
-function openModal(title, html, onSave) {
-  document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalBody').innerHTML = html;
-  document.getElementById('modalSaveBtn').onclick = onSave;
-  new bootstrap.Modal(document.getElementById('genericModal')).show();
-}
-function closeModal() { bootstrap.Modal.getInstance(document.getElementById('genericModal')).hide(); }
-
-// ============ Dashboard ============
-function updateDashboard() {
-  document.getElementById('statProducts').textContent = DB.products.length;
-  document.getElementById('statEmployees').textContent = DB.employees.length;
-  document.getElementById('statInvoices').textContent = DB.invoices.length;
-  document.getElementById('statSamples').textContent = DB.labSamples.length;
-  
-  const revenue = DB.invoices.filter(i => i.type === 'sale').reduce((s, i) => s + (i.grandTotal || 0), 0);
-  document.getElementById('totalRevenue').textContent = revenue.toLocaleString() + ' ج.م';
-  
-  const low = DB.products.filter(p => p.quantity <= (p.minQuantity || 0));
-  document.getElementById('lowStockAlerts').innerHTML = low.length === 0 
-    ? '<p class="text-success">✅ لا توجد تنبيهات</p>' 
-    : low.map(p => `<div class="alert alert-warning py-2">⚠️ ${p.name} - الكمية: ${p.quantity}</div>`).join('');
-}
-
-// ============ Products ============
-function openProductModal() {
-  openModal('📦 إضافة منتج', `
-    <div class="row g-3">
-      <div class="col-md-6"><label>الكود</label><input id="pCode" class="form-control"></div>
-      <div class="col-md-6"><label>الاسم</label><input id="pName" class="form-control"></div>
-      <div class="col-md-6"><label>HS Code</label><input id="pHS" class="form-control" placeholder="2815.11"></div>
-      <div class="col-md-6"><label>النوع</label><select id="pCat" class="form-select"><option value="raw">مادة خام</option><option value="finished">منتج نهائي</option><option value="chemical">مركب كيميائي</option></select></div>
-      <div class="col-md-6"><label>الكمية</label><input id="pQty" type="number" class="form-control" value="0"></div>
-      <div class="col-md-6"><label>الحد الأدنى</label><input id="pMin" type="number" class="form-control" value="0"></div>
-      <div class="col-md-6"><label>الوحدة</label><select id="pUnit" class="form-select"><option value="kg">كجم</option><option value="liter">لتر</option><option value="ton">طن</option></select></div>
-      <div class="col-md-6"><label>السعر</label><input id="pPrice" type="number" class="form-control" value="0"></div>
-    </div>
-  `, () => {
-    DB.products.push({
-      id: Date.now(), code: pCode.value, name: pName.value, hsCode: pHS.value,
-      category: pCat.value, quantity: +pQty.value, minQuantity: +pMin.value,
-      unit: pUnit.value, price: +pPrice.value
-    });
-    save('products'); renderProducts(); closeModal(); toast('✅ تم إضافة المنتج');
-  });
-}
-
-function renderProducts() {
-  document.getElementById('productsBody').innerHTML = DB.products.map((p, i) => `
-    <tr>
-      <td>${i+1}</td><td>${p.code}</td><td>${p.name}</td><td>${p.hsCode || '-'}</td>
-      <td>${p.category}</td>
-      <td class="${p.quantity <= p.minQuantity ? 'text-danger fw-bold' : ''}">${p.quantity}</td>
-      <td>${p.unit}</td><td>${p.price}</td>
-      <td><button class="btn btn-sm btn-danger" onclick="deleteItem('products', ${p.id})"><i class="bi bi-trash"></i></button></td>
-    </tr>
-  `).join('') || '<tr><td colspan="9" class="text-center">لا توجد منتجات</td></tr>';
-}
-
-// ============ Invoices ============
-function openInvoiceModal() {
-  openModal('🧾 فاتورة جديدة', `
-    <div class="row g-3">
-      <div class="col-md-6"><label>رقم الفاتورة</label><input id="iNum" class="form-control" value="INV-${Date.now()}"></div>
-      <div class="col-md-6"><label>النوع</label><select id="iType" class="form-select"><option value="sale">بيع</option><option value="purchase">شراء</option><option value="export">تصدير</option></select></div>
-      <div class="col-md-6"><label>العميل/المورد</label><input id="iPartner" class="form-control"></div>
-      <div class="col-md-6"><label>الرقم الضريبي</label><input id="iTax" class="form-control"></div>
-      <div class="col-md-6"><label>التاريخ</label><input id="iDate" type="date" class="form-control" value="${new Date().toISOString().split('T')[0]}"></div>
-      <div class="col-md-6"><label>الإجمالي قبل الضريبة</label><input id="iTotal" type="number" class="form-control" value="0"></div>
-    </div>
-  `, () => {
-    const total = +iTotal.value;
-    const taxValue = total * 0.14;
-    DB.invoices.push({
-      id: Date.now(), number: iNum.value, type: iType.value,
-      partner: iPartner.value, taxId: iTax.value, date: iDate.value,
-      total, taxValue, grandTotal: total + taxValue
-    });
-    save('invoices'); renderInvoices(); closeModal(); toast('✅ تم إنشاء الفاتورة');
-  });
-}
-
-function renderInvoices() {
-  document.getElementById('invoicesBody').innerHTML = DB.invoices.map((inv, i) => `
-    <tr>
-      <td>${i+1}</td><td>${inv.number}</td><td>${inv.partner}</td>
-      <td><span class="badge bg-${inv.type === 'sale' ? 'success' : inv.type === 'export' ? 'info' : 'warning'}">${inv.type}</span></td>
-      <td>${inv.date}</td><td>${inv.total}</td><td>${inv.taxValue.toFixed(2)}</td>
-      <td class="fw-bold">${inv.grandTotal.toFixed(2)}</td>
-    </tr>
-  `).join('') || '<tr><td colspan="8" class="text-center">لا توجد فواتير</td></tr>';
-}
-
-// ============ Batches ============
-function openBatchModal() {
-  openModal('🏷️ دفعة جديدة', `
-    <div class="row g-3">
-      <div class="col-md-6"><label>رقم الدفعة</label><input id="bNum" class="form-control" value="B-${Date.now()}"></div>
-      <div class="col-md-6"><label>المنتج</label><input id="bProduct" class="form-control"></div>
-      <div class="col-md-6"><label>الكمية</label><input id="bQty" type="number" class="form-control"></div>
-      <div class="col-md-6"><label>تاريخ الإنتاج</label><input id="bProd" type="date" class="form-control" value="${new Date().toISOString().split('T')[0]}"></div>
-      <div class="col-md-6"><label>تاريخ الصلاحية</label><input id="bExp" type="date" class="form-control"></div>
-      <div class="col-md-6"><label>الخامات الداخلة</label><input id="bRaw" class="form-control" placeholder="مادة أ:100كجم، مادة ب:50لتر"></div>
-    </div>
-  `, () => {
-    DB.batches.push({
-      id: Date.now(), number: bNum.value, product: bProduct.value, quantity: +bQty.value,
-      productionDate: bProd.value, expiryDate: bExp.value, rawMaterials: bRaw.value, qc: false
-    });
-    save('batches'); renderBatches(); closeModal(); toast('✅ تم إضافة الدفعة');
-  });
-}
-
-function renderBatches() {
-  document.getElementById('batchesBody').innerHTML = DB.batches.map((b, i) => `
-    <tr>
-      <td>${i+1}</td><td>${b.number}</td><td>${b.product}</td><td>${b.quantity}</td>
-      <td>${b.productionDate}</td><td>${b.expiryDate}</td>
-      <td><span class="badge bg-${b.qc ? 'success' : 'warning'}">${b.qc ? '✅ معتمدة' : '⏳ قيد المراجعة'}</span></td>
-    </tr>
-  `).join('') || '<tr><td colspan="7" class="text-center">لا توجد دفعات</td></tr>';
-}
-
-// ============ Lab ============
-function openSampleModal() {
-  openModal('🧪 عينة معملية', `
-    <div class="row g-3">
-      <div class="col-md-6"><label>كود العينة</label><input id="lCode" class="form-control" value="S-${Date.now()}"></div>
-      <div class="col-md-6"><label>المنتج</label><input id="lProduct" class="form-control"></div>
-      <div class="col-md-6"><label>النوع</label><select id="lType" class="form-select"><option value="raw">مادة خام</option><option value="finished">منتج نهائي</option><option value="in_process">أثناء التصنيع</option></select></div>
-      <div class="col-md-6"><label>pH</label><input id="lPH" type="number" step="0.1" class="form-control"></div>
-      <div class="col-md-6"><label>اللزوجة</label><input id="lVisc" type="number" class="form-control"></div>
-      <div class="col-md-6"><label>النتيجة</label><select id="lResult" class="form-select"><option value="pass">✅ مطابق</option><option value="fail">❌ غير مطابق</option></select></div>
-    </div>
-  `, () => {
-    DB.labSamples.push({
-      id: Date.now(), code: lCode.value, product: lProduct.value, type: lType.value,
-      ph: +lPH.value, viscosity: +lVisc.value, result: lResult.value,
-      date: new Date().toISOString().split('T')[0]
-    });
-    save('labSamples'); renderLab(); closeModal(); toast('✅ تم إضافة العينة');
-  });
-}
-
-function renderLab() {
-  document.getElementById('labBody').innerHTML = DB.labSamples.map((s, i) => `
-    <tr>
-      <td>${i+1}</td><td>${s.code}</td><td>${s.product}</td><td>${s.type}</td>
-      <td>${s.ph}</td><td>${s.viscosity}</td>
-      <td><span class="badge bg-${s.result === 'pass' ? 'success' : 'danger'}">${s.result === 'pass' ? '✅ مطابق' : '❌ غير مطابق'}</span></td>
-      <td>${s.date}</td>
-    </tr>
-  `).join('') || '<tr><td colspan="8" class="text-center">لا توجد عينات</td></tr>';
-}
-
-// ============ HR ============
-function openEmployeeModal() {
-  openModal('👤 موظف جديد', `
-    <div class="row g-3">
-      <div class="col-md-6"><label>الكود</label><input id="eCode" class="form-control"></div>
-      <div class="col-md-6"><label>الاسم</label><input id="eName" class="form-control"></div>
-      <div class="col-md-6"><label>الوظيفة</label><input id="eJob" class="form-control"></div>
-      <div class="col-md-6"><label>القسم</label><input id="eDept" class="form-control"></div>
-      <div class="col-md-6"><label>الراتب الأساسي</label><input id="eSalary" type="number" class="form-control"></div>
-      <div class="col-md-6"><label>رقم البصمة</label><input id="eFP" class="form-control"></div>
-    </div>
-  `, () => {
-    DB.employees.push({
-      id: Date.now(), code: eCode.value, name: eName.value, job: eJob.value,
-      department: eDept.value, salary: +eSalary.value, fingerprint: eFP.value
-    });
-    save('employees'); renderEmployees(); closeModal(); toast('✅ تم إضافة الموظف');
-  });
-}
-
-function renderEmployees() {
-  document.getElementById('employeesBody').innerHTML = DB.employees.map((e, i) => `
-    <tr><td>${i+1}</td><td>${e.code}</td><td>${e.name}</td><td>${e.job}</td><td>${e.department}</td><td>${e.salary}</td><td>${e.fingerprint}</td></tr>
-  `).join('') || '<tr><td colspan="7" class="text-center">لا يوجد موظفين</td></tr>';
-}
-
-// ============ Attendance ============
-function checkIn() {
-  const fp = document.getElementById('fingerprintInput').value.trim();
-  const emp = DB.employees.find(e => e.fingerprint === fp);
-  if (!emp) { toast('❌ رقم البصمة غير صحيح', 'danger'); return; }
-  const today = new Date().toISOString().split('T')[0];
-  const existing = DB.attendance.find(a => a.employeeId === emp.id && a.date === today);
-  if (existing) { toast('⚠️ تم تسجيل الحضور مسبقاً', 'warning'); return; }
-  DB.attendance.push({
-    id: Date.now(), employeeId: emp.id, employeeName: emp.name, date: today,
-    checkIn: new Date().toLocaleTimeString('ar-EG'), checkOut: null, status: 'present'
-  });
-  save('attendance'); renderAttendance(); toast(`✅ تم تسجيل حضور ${emp.name}`);
-  document.getElementById('fingerprintInput').value = '';
-}
-
-function checkOut() {
-  const fp = document.getElementById('fingerprintInput').value.trim();
-  const emp = DB.employees.find(e => e.fingerprint === fp);
-  if (!emp) { toast('❌ رقم البصمة غير صحيح', 'danger'); return; }
-  const today = new Date().toISOString().split('T')[0];
-  const att = DB.attendance.find(a => a.employeeId === emp.id && a.date === today && !a.checkOut);
-  if (!att) { toast('❌ لا يوجد حضور مسجل', 'danger'); return; }
-  att.checkOut = new Date().toLocaleTimeString('ar-EG');
-  save('attendance'); renderAttendance(); toast(`✅ تم تسجيل انصراف ${emp.name}`);
-  document.getElementById('fingerprintInput').value = '';
-}
-
-function renderAttendance() {
-  const today = new Date().toISOString().split('T')[0];
-  const todayAtt = DB.attendance.filter(a => a.date === today);
-  document.getElementById('attendanceToday').innerHTML = todayAtt.map(a => `
-    <div class="alert alert-info py-2">
-      <strong>${a.employeeName}</strong> - حضور: ${a.checkIn} ${a.checkOut ? '| انصراف: ' + a.checkOut : ''}
-    </div>
-  `).join('') || '<p class="text-muted">لا يوجد حضور اليوم</p>';
-}
-
-// ============ Payroll ============
-function generatePayroll() {
-  const month = new Date().toISOString().slice(0, 7);
-  DB.payroll = DB.employees.map(e => {
-    const insurance = e.salary * 0.11;
-    const tax = Math.max(0, (e.salary - 15000) * 0.10);
-    const net = e.salary - insurance - tax;
-    return {
-      id: Date.now() + e.id, employeeId: e.id, employeeName: e.name,
-      month, baseSalary: e.salary, overtime: 0, deductions: 0,
-      insurance, tax, net, paid: false
-    };
-  });
-  save('payroll'); renderPayroll(); toast('✅ تم توليد رواتب الشهر');
-}
-
-function renderPayroll() {
-  document.getElementById('payrollBody').innerHTML = DB.payroll.map((p, i) => `
-    <tr>
-      <td>${i+1}</td><td>${p.employeeName}</td><td>${p.baseSalary}</td>
-      <td>${p.overtime}</td><td>${(p.insurance + p.tax).toFixed(2)}</td>
-      <td class="fw-bold">${p.net.toFixed(2)}</td>
-      <td><span class="badge bg-${p.paid ? 'success' : 'warning'}">${p.paid ? '✅ مصروف' : '⏳ انتظار'}</span></td>
-      <td>${!p.paid ? `<button class="btn btn-sm btn-success" onclick="paySalary(${p.id})">صرف</button>` : '-'}</td>
-    </tr>
-  `).join('') || '<tr><td colspan="8" class="text-center">لا توجد رواتب</td></tr>';
-}
-
-function paySalary(id) {
-  const p = DB.payroll.find(x => x.id === id);
-  if (p) { p.paid = true; save('payroll'); renderPayroll(); toast('✅ تم صرف الراتب'); }
-}
-
-// ============ QC ============
-function openQCModal() {
-  openModal('📋 فحص جودة', `
-    <div class="row g-3">
-      <div class="col-md-6"><label>رقم الدفعة</label><input id="qcBatch" class="form-control"></div>
-      <div class="col-md-6"><label>التاريخ</label><input id="qcDate" type="date" class="form-control" value="${new Date().toISOString().split('T')[0]}"></div>
-      <div class="col-md-6"><label>القياسات</label><input id="qcParams" class="form-control" placeholder="pH:7.0, Viscosity:100"></div>
-      <div class="col-md-6"><label>النتيجة</label><select id="qcResult" class="form-select"><option value="pass">مطابق</option><option value="fail">غير مطابق</option></select></div>
-      <div class="col-md-6"><label>الفاحص</label><input id="qcTester" class="form-control"></div>
-    </div>
-  `, () => {
-    DB.qc.push({ id: Date.now(), batch: qcBatch.value, date: qcDate.value, params: qcParams.value, result: qcResult.value, tester: qcTester.value });
-    save('qc'); renderQC(); closeModal(); toast('✅ تم إضافة الفحص');
-  });
-}
-function renderQC() {
-  document.getElementById('qcBody').innerHTML = DB.qc.map((q, i) => `
-    <tr><td>${i+1}</td><td>${q.batch}</td><td>${q.date}</td><td>${q.params}</td>
-    <td><span class="badge bg-${q.result === 'pass' ? 'success' : 'danger'}">${q.result}</span></td><td>${q.tester}</td></tr>
-  `).join('') || '<tr><td colspan="6" class="text-center">لا توجد فحوصات</td></tr>';
-}
-
-// ============ SDS ============
-function openSDSModal() {
-  openModal('📄 صحيفة سلامة', `
-    <div class="row g-3">
-      <div class="col-md-6"><label>المنتج</label><input id="sdsProduct" class="form-control"></div>
-      <div class="col-md-6"><label>تاريخ الإصدار</label><input id="sdsIssue" type="date" class="form-control" value="${new Date().toISOString().split('T')[0]}"></div>
-      <div class="col-md-6"><label>تاريخ الانتهاء</label><input id="sdsExpiry" type="date" class="form-control"></div>
-      <div class="col-md-6"><label>عبارات الخطر</label><input id="sdsHazard" class="form-control" placeholder="H315, H319"></div>
-    </div>
-  `, () => {
-    DB.sds.push({ id: Date.now(), product: sdsProduct.value, issueDate: sdsIssue.value, expiryDate: sdsExpiry.value, hazard: sdsHazard.value });
-    save('sds'); renderSDS(); closeModal(); toast('✅ تم إضافة SDS');
-  });
-}
-function renderSDS() {
-  document.getElementById('sdsBody').innerHTML = DB.sds.map((s, i) => `
-    <tr><td>${i+1}</td><td>${s.product}</td><td>${s.issueDate}</td><td>${s.expiryDate}</td><td>${s.hazard}</td></tr>
-  `).join('') || '<tr><td colspan="5" class="text-center">لا توجد صحائف</td></tr>';
-}
-
-// ============ Waste ============
-function openWasteModal() {
-  openModal('☣️ مخلفات', `
-    <div class="row g-3">
-      <div class="col-md-6"><label>التاريخ</label><input id="wDate" type="date" class="form-control" value="${new Date().toISOString().split('T')[0]}"></div>
-      <div class="col-md-6"><label>المادة</label><input id="wChem" class="form-control"></div>
-      <div class="col-md-6"><label>الكمية (طن)</label><input id="wQty" type="number" class="form-control"></div>
-      <div class="col-md-6"><label>طريقة التخلص</label><input id="wMethod" class="form-control"></div>
-      <div class="col-md-6"><label>المتعهد</label><input id="wContractor" class="form-control"></div>
-    </div>
-  `, () => {
-    DB.waste.push({ id: Date.now(), date: wDate.value, chemical: wChem.value, quantity: +wQty.value, method: wMethod.value, contractor: wContractor.value });
-    save('waste'); renderWaste(); closeModal(); toast('✅ تم تسجيل المخلفات');
-  });
-}
-function renderWaste() {
-  document.getElementById('wasteBody').innerHTML = DB.waste.map((w, i) => `
-    <tr><td>${i+1}</td><td>${w.date}</td><td>${w.chemical}</td><td>${w.quantity}</td><td>${w.method}</td><td>${w.contractor}</td></tr>
-  `).join('') || '<tr><td colspan="6" class="text-center">لا توجد مخلفات</td></tr>';
-}
-
-// ============ Maintenance ============
-function openMaintenanceModal() {
-  openModal('🔧 مهمة صيانة', `
-    <div class="row g-3">
-      <div class="col-md-6"><label>الماكينة</label><input id="mMachine" class="form-control"></div>
-      <div class="col-md-6"><label>النوع</label><select id="mType" class="form-select"><option value="preventive">وقائية</option><option value="corrective">علاجية</option></select></div>
-      <div class="col-md-6"><label>التاريخ</label><input id="mDate" type="date" class="form-control" value="${new Date().toISOString().split('T')[0]}"></div>
-      <div class="col-md-6"><label>ملاحظات</label><input id="mNotes" class="form-control"></div>
-    </div>
-  `, () => {
-    DB.maintenance.push({ id: Date.now(), machine: mMachine.value, type: mType.value, date: mDate.value, notes: mNotes.value, completed: false });
-    save('maintenance'); renderMaintenance(); closeModal(); toast('✅ تم إضافة مهمة الصيانة');
-  });
-}
-function renderMaintenance() {
-  document.getElementById('maintenanceBody').innerHTML = DB.maintenance.map((m, i) => `
-    <tr><td>${i+1}</td><td>${m.machine}</td><td>${m.type}</td><td>${m.date}</td>
-    <td><span class="badge bg-${m.completed ? 'success' : 'warning'}">${m.completed ? '✅ تم' : '⏳ معلقة'}</span></td>
-    <td>${!m.completed ? `<button class="btn btn-sm btn-success" onclick="completeMaintenance(${m.id})">إتمام</button>` : '-'}</td></tr>
-  `).join('') || '<tr><td colspan="6" class="text-center">لا توجد مهام</td></tr>';
-}
-function completeMaintenance(id) {
-  const m = DB.maintenance.find(x => x.id === id);
-  if (m) { m.completed = true; save('maintenance'); renderMaintenance(); toast('✅ تم إتمام الصيانة'); }
-}
-
-// ============ Shipping ============
-function openShippingModal() {
-  openModal('🚢 شحنة جديدة', `
-    <div class="row g-3">
-      <div class="col-md-6"><label>رقم الشحنة</label><input id="shNum" class="form-control" value="SH-${Date.now()}"></div>
-      <div class="col-md-6"><label>رقم الدفعة</label><input id="shBatch" class="form-control"></div>
-      <div class="col-md-6"><label>المنتج</label><input id="shProduct" class="form-control"></div>
-      <div class="col-md-6"><label>الكمية</label><input id="shQty" type="number" class="form-control"></div>
-      <div class="col-md-6"><label>الوجهة</label><input id="shDest" class="form-control"></div>
-      <div class="col-md-6"><label>التاريخ</label><input id="shDate" type="date" class="form-control" value="${new Date().toISOString().split('T')[0]}"></div>
-    </div>
-  `, () => {
-    DB.shipping.push({ id: Date.now(), number: shNum.value, batch: shBatch.value, product: shProduct.value, quantity: +shQty.value, destination: shDest.value, date: shDate.value });
-    save('shipping'); renderShipping(); closeModal(); toast('✅ تم إضافة الشحنة');
-  });
-}
-function renderShipping() {
-  document.getElementById('shippingBody').innerHTML = DB.shipping.map((s, i) => `
-    <tr><td>${i+1}</td><td>${s.number}</td><td>${s.batch}</td><td>${s.product}</td><td>${s.quantity}</td><td>${s.destination}</td><td>${s.date}</td></tr>
-  `).join('') || '<tr><td colspan="7" class="text-center">لا توجد شحنات</td></tr>';
-}
-
-// ============ Complaints ============
-function openComplaintModal() {
-  openModal('📋 شكوى جديدة', `
-    <div class="row g-3">
-      <div class="col-md-6"><label>رقم الشكوى</label><input id="cNum" class="form-control" value="C-${Date.now()}"></div>
-      <div class="col-md-6"><label>العميل</label><input id="cCustomer" class="form-control"></div>
-      <div class="col-md-6"><label>المنتج</label><input id="cProduct" class="form-control"></div>
-      <div class="col-md-6"><label>الوصف</label><input id="cDesc" class="form-control"></div>
-      <div class="col-md-6"><label>الخطورة</label><select id="cSeverity" class="form-select"><option value="low">منخفضة</option><option value="medium">متوسطة</option><option value="high">عالية</option></select></div>
-    </div>
-  `, () => {
-    DB.complaints.push({
-      id: Date.now(), number: cNum.value, customer: cCustomer.value, product: cProduct.value,
-      description: cDesc.value, severity: cSeverity.value, status: 'open',
-      date: new Date().toISOString().split('T')[0],
-      responseDate: new Date(Date.now() + 2*24*60*60*1000).toISOString().split('T')[0]
-    });
-    save('complaints'); renderComplaints(); closeModal(); toast('✅ تم تسجيل الشكوى');
-  });
-}
-function renderComplaints() {
-  document.getElementById('complaintsBody').innerHTML = DB.complaints.map((c, i) => `
-    <tr><td>${i+1}</td><td>${c.number}</td><td>${c.customer}</td><td>${c.product}</td><td>${c.description}</td>
-    <td><span class="badge bg-${c.status === 'open' ? 'warning' : 'success'}">${c.status}</span></td>
-    <td>${c.responseDate}</td></tr>
-  `).join('') || '<tr><td colspan="7" class="text-center">لا توجد شكاوى</td></tr>';
-}
-
-// ============ Users ============
-function openUserModal() {
-  openModal('👤 مستخدم جديد', `
-    <div class="row g-3">
-      <div class="col-md-6"><label>اسم المستخدم</label><input id="uName" class="form-control"></div>
-      <div class="col-md-6"><label>كلمة المرور</label><input id="uPass" type="password" class="form-control"></div>
-      <div class="col-md-6"><label>الاسم الكامل</label><input id="uFull" class="form-control"></div>
-      <div class="col-md-6"><label>الدور</label><select id="uRole" class="form-select">
-        <option value="manager">مدير عام</option>
-        <option value="assistant_manager">مساعد مدير</option>
-        <option value="lab_tech">مسؤول معمل</option>
-        <option value="warehouse">مسؤول مخازن</option>
-        <option value="employee">موظف</option>
-      </select></div>
-    </div>
-  `, () => {
-    DB.users.push({ username: uName.value, password: uPass.value, fullName: uFull.value, role: uRole.value });
-    save('users'); renderUsers(); closeModal(); toast('✅ تم إضافة المستخدم');
-  });
-}
-function renderUsers() {
-  document.getElementById('usersBody').innerHTML = DB.users.map((u, i) => `
-    <tr><td>${i+1}</td><td>${u.username}</td><td>${u.fullName}</td><td>${u.role}</td><td><span class="badge bg-success">نشط</span></td></tr>
-  `).join('');
-}
-
-// ============ ISO ============
-function generateISOReport(lang) {
-  const isAr = lang === 'ar';
-  const html = `
-    <div class="card"><div class="card-body">
-      <h3>${isAr ? 'تقرير الأيزو الشامل' : 'ISO Comprehensive Report'}</h3>
-      <hr>
-      <p><strong>${isAr ? 'التاريخ' : 'Date'}:</strong> ${new Date().toLocaleDateString('ar-EG')}</p>
-      <p><strong>${isAr ? 'عدد المنتجات' : 'Products Count'}:</strong> ${DB.products.length}</p>
-      <p><strong>${isAr ? 'عدد الموظفين' : 'Employees'}:</strong> ${DB.employees.length}</p>
-      <p><strong>${isAr ? 'عدد الدفعات' : 'Batches'}:</strong> ${DB.batches.length}</p>
-      <p><strong>${isAr ? 'فحوصات الجودة' : 'QC Tests'}:</strong> ${DB.qc.length}</p>
-      <p><strong>${isAr ? 'صحائف السلامة' : 'SDS'}:</strong> ${DB.sds.length}</p>
-      <p><strong>${isAr ? 'المخلفات المسجلة' : 'Waste Records'}:</strong> ${DB.waste.length}</p>
-      <p><strong>${isAr ? 'الشكاوى' : 'Complaints'}:</strong> ${DB.complaints.length}</p>
-      <hr>
-      <p class="text-success"><strong>✅ ${isAr ? 'المصنع جاهز للأيزو' : 'Factory is ISO Ready'}</strong></p>
-    </div></div>
-  `;
-  document.getElementById('isoReportContent').innerHTML = html;
-}
-
-// ============ Helpers ============
-function deleteItem(table, id) {
-  if (!confirm('هل أنت متأكد من الحذف؟')) return;
-  DB[table] = DB[table].filter(x => x.id !== id);
-  save(table);
-  renderAll();
-  toast('✅ تم الحذف');
-}
-
-function exportTable(tableId, name) {
-  const table = document.getElementById(tableId);
-  let csv = [];
-  for (let row of table.rows) {
-    let cols = [...row.cells].map(c => `"${c.innerText}"`);
-    csv.push(cols.join(','));
-  }
-  const blob = new Blob(['\ufeff' + csv.join('\n')], { type: 'text/csv;charset=utf-8' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = `${name}_${new Date().toISOString().split('T')[0]}.csv`;
-  link.click();
-  toast('✅ تم تصدير الملف');
-}
-
-function renderAll() {
-  renderProducts(); renderInvoices(); renderBatches(); renderLab();
-  renderEmployees(); renderAttendance(); renderPayroll(); renderQC();
-  renderSDS(); renderWaste(); renderMaintenance(); renderShipping();
-  renderComplaints(); renderUsers();
-  updateDashboard();
-}
-
-// ============ Init ============
-document.getElementById('loginPass').addEventListener('keypress', e => { if (e.key === 'Enter') login(); });
-updateDashboard();
-</script>
+        // 9. إحصائيات لوحة التحكم
+        function updateDashboardStats() {
+            document.getElementById('dash-prod-count').innerText = store.products ? store.products.length : 0;
+            const salesTotal = store.invoices ? store.invoices.reduce((acc, curr) => acc + (parseFloat(curr.total) || 0), 0) : 0;
+            document.getElementById('dash-sales-total').innerText = salesTotal.toLocaleString() + ' ج.م';
+            document.getElementById('dash-lab-count').innerText = store.lab ? store.lab.length : 0;
+            document.getElementById('dash-comp-count').innerText = store.complaints ? store.complaints.length : 0;
+        }
+    </script>
 </body>
 </html>
